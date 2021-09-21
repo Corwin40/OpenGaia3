@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Serializer\SerializerInterface;
 
 
 class RecommandationController extends AbstractController
@@ -23,8 +21,31 @@ class RecommandationController extends AbstractController
     public function index(RecommandationRepository $recommandationRepository): Response
     {
         $user = $this->getUser();
+        $role = $user->getType();
+
+        if ($role == 'admin')
+        {
+            $receipts = $this->getDoctrine()->getRepository(Recommandation::class)->findByReceiptRead();
+            $sends = $this->getDoctrine()->getRepository(Recommandation::class)->findBySendRead();
+
+            return $this->render('gest_app/recommandation/index.html.twig', [
+                'receipts' => $receipts,
+                'sends' => $sends
+            ]);
+        }
+        else
+        {
+            $receipts = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceiptRead($user);
+            $sends = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSendRead($user);
+
+            return $this->render('gest_app/recommandation/index.html.twig', [
+                'receipts' => $receipts,
+                'sends' => $sends
+            ]);
+        }
         $receipts = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserReceiptRead($user);
         $sends = $this->getDoctrine()->getRepository(Recommandation::class)->findByUserSendRead($user);
+
         return $this->render('gest_app/recommandation/index.html.twig', [
             'receipts' => $receipts,
             'sends' => $sends
@@ -61,9 +82,16 @@ class RecommandationController extends AbstractController
             $entityManager->persist($recommandation);
             $entityManager->flush();
 
-            //récupération de l'adresss mail pour le membre recommandé
+            //récupération de l'adresse mail pour le membre recommandé
+            $author = $recommandation->getAuthor();
             $membre = $recommandation->getMember();
+            $firstNameDesti = $membre->getFirstName();
+            $lastNameDesti = $membre->getLastName();
             $email = $membre->getEmail();
+
+            $titleRecom = $recommandation->getName();
+
+            // dd($author, $destinataire);
 
             // partie de code pour envoyer un email au membre recommandé
             $email = (new TemplatedEmail())
@@ -73,25 +101,34 @@ class RecommandationController extends AbstractController
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - une nouvelle recommandation vous attends dans votre espace')
+                ->subject('JUST à FAIRE - une nouvelle recommandation vous attends dans votre espace')
                 //->text('Sending emails is fun again!')
                 ->htmlTemplate('email/newRecommandation.html.twig')
                 ->context([
-                    'author' => $user->getUsername(),
+                    'author' => $author,
+                    'titleRecom' => $titleRecom,
+                    'prenomDestin' => $firstNameDesti,
+                    'nomDestin' => $lastNameDesti,
                 ]);
             $mailer->send($email);
 
-            // partie de code pour envoyer un email au membre recommandé
+            // partie de code pour envoyer un email à Just
             $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
-                ->to('xavier.burke@openpixl.fr')
+                ->to('contact@justafaire.fr')
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - une nouvelle recommandation a été émise depuis le site')
+                ->subject('JUST à FAIRE - une nouvelle recommandation a été émise depuis le site')
                 //->text('Sending emails is fun again!')
-                ->htmlTemplate('email/newRecommandationWebMaster.html.twig');
+                ->htmlTemplate('email/newRecommandationWebMaster.html.twig')
+                ->context([
+                    'author' => $author,
+                    'titleRecom' => $titleRecom,
+                    'prenomDestin' => $firstNameDesti,
+                    'nomDestin' => $lastNameDesti,
+                ]);
             $mailer->send($email);
 
             return $this->redirectToRoute('op_gestapp_recommandation_index');
@@ -140,7 +177,7 @@ class RecommandationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('gest_app_recommandation_index');
+            return $this->redirectToRoute('op_gestapp_recommandation_index');
         }
 
         return $this->render('gest_app/recommandation/edit.html.twig', [

@@ -149,7 +149,27 @@ class RecommandationRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    /**
+     *
+     */
+    public function CountCA()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery(
+                "
+                SELECT 
+                    r.recoState AS recoState, 
+                    SUM(CASE WHEN r.recoState = :recoState THEN r.recoPrice ELSE 0 END) AS ca,
+                    COUNT(r.id) AS recomm
+                FROM App\Entity\GestApp\Recommandation r
+                "
+            )
+            ->setParameter('recoState', 'Valid');
 
+        // Retourne un tabelau associatif
+        return $query->getResult();
+    }
 
     // /**
     //  * @return Recommandation[] Returns an array of Recommandation objects

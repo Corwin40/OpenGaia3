@@ -53,11 +53,31 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="Add" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+                {# Modal pour envoyer une invitation depuis l'admin #}
+                <div class="modal fade" id="AddInvitation" tabindex="-1" aria-labelledby="AddInvitation" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Proposer une nouvelle invitation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ render(controller('App\\Controller\\Admin\\ParrainageController::new')) }}
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" type="button" class="btn btn-primary js-add-invitation" data-bs-dismiss="modal">Publier</a>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {# Modal pour envoyer une annonce depuis l'admin #}
+                <div class="modal fade" id="AddAnnonce" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Nouvelle Annonce</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -65,6 +85,24 @@
                             </div>
                             <div class="modal-footer">
                                 <a href="#" type="button" class="btn btn-primary js-add-annonce" data-bs-dismiss="modal">Publier</a>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# Modal pour envoyer un message depuis l'admin #}
+                <div class="modal fade" id="AddMessage" tabindex="-1" aria-labelledby="Add" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Nouveau message</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ render(controller('App\\Controller\\Admin\\MessageController::new')) }}
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" type="button" class="btn btn-primary js-add-message" data-bs-dismiss="modal">Envoyer</a>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                             </div>
                         </div>

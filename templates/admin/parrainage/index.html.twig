@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parrainage index{% endblock %}
+
+{% block body %}
+    <h1>Parrainage index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ParrainageFirstname</th>
+                <th>ParrainageLastname</th>
+                <th>ParrainageEmail</th>
+                <th>IsCotisation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for parrainage in parrainages %}
+            <tr>
+                <td>{{ parrainage.id }}</td>
+                <td>{{ parrainage.ParrainageFirstname }}</td>
+                <td>{{ parrainage.parrainageLastname }}</td>
+                <td>{{ parrainage.parrainageEmail }}</td>
+                <td>{{ parrainage.isCotisation ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('admin_parrainage_show', {'id': parrainage.id}) }}">show</a>
+                    <a href="{{ path('admin_parrainage_edit', {'id': parrainage.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_parrainage_new') }}">Create new</a>
+{% endblock %}

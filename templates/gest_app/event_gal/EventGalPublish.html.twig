@@ -6,47 +6,62 @@
     {{ parent() }}
     <script>
         window.onload = function(){
-            document.addEventListener("click", function(e){
-                if(e.target.classList.contains("mdl-img")){
-                    const src = e.target.getAttribute("src");
-                    document.querySelector(".img-modal").src = src;
-                    const myModal = new bootstrap.Modal(document.getElementById("galerie-modal"));
-                    myModal.show();
-                    console.log(src);
-                }
-            })
         }
     </script>
 {% endblock %}
 
 {% block content %}
-<section class="container">
-    <div class="row">
-        {% for event_gal in event_gals %}
-            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2">
-                <div class="card img_gall">
-                    <a type="button">
-                        <img class="mdl-img card-img-top" src="{{ vich_uploader_asset(event_gal) }}" alt="{{ event_gal.alt }}">
-                    </a>
-                </div>
-            </div>
-            <div class="modal fade" id="galerie-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content ">
-                        <div class="modal-body">
-                            <img class="img-fluid img-modal" src="{{ asset('images/articles_front/INVIT_1ERJUILLET_CAPBRETON.jpg') }}" alt="image">
-                        </div>
+    {% set length = event_gals|length %}
+    {% if length < 20 %}
+    <section class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2 justify-content-center">
+                {% for event_gal in event_gals %}
+                <div class="mt-3 mb-3 g-3">
+                    <div class="card img_gall">
+                        <a data-bigpicture='{"imgSrc": "{{ vich_uploader_asset(event_gal) }}"}' href="#">
+                            <img class="card-img-top" src="{{ vich_uploader_asset(event_gal) }}" alt="{{ event_gal.alt }}">
+                        </a>
                     </div>
                 </div>
+                {% if loop.index % 3 == 0 %}
             </div>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-    </div>
+            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2 justify-content-center">
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="navigation">
+                {# Ajout du template personnalisé pour la pagination en fin du block #}
+                {{ knp_pagination_render(event_gals, 'include/pagination.html.twig') }}
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <section class="container">
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2 justify-content-center">
+            {% for event_gal in event_gals %}
+                <div class="mt-3 mb-3 g-3">
+                    <div class="card img_gall">
+                        <a data-bigpicture='{"imgSrc": "{{ vich_uploader_asset(event_gal) }}"}' href="#">
+                            <img class="card-img-top" src="{{ vich_uploader_asset(event_gal) }}" alt="{{ event_gal.alt }}">
+                        </a>
+                    </div>
+                </div>
+                {% if loop.index % 4 == 0 %}
+            </div>
+            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2 justify-content-center">
+                {% endif %}
+            {% endfor %}
+            </div>
+            <div class="navigation">
+                {# Ajout du template personnalisé pour la pagination en fin du block #}
+                {{ knp_pagination_render(event_gals, 'include/pagination.html.twig') }}
+            </div>
+        </div>
+    </section>
+{% endif %}
 
-</section>
 
 
 {% endblock %}

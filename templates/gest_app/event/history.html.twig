@@ -9,9 +9,10 @@
                 {% endif %}
                 <div class="card-img-overlay">
                     <div class="align-self-center">
-                        <p>{{ event.name }}</p>
+                        <a href="{{ path('op_gestapp_eventgal_eventgalpublish', {'idevent': event.id}) }}">{{ event.name }}</a>
                     </div>
                 </div>
+                <a href="{{ path('op_gestapp_eventgal_eventgalpublish', {'idevent': event.id}) }}" class="stretched-link"></a>
             </div>
         </div>
     {% else %}
@@ -20,4 +21,3 @@
         </div>
     {% endfor %}
 </div>
-

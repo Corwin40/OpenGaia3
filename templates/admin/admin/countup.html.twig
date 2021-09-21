@@ -1,18 +1,47 @@
-<section>
-    <div class="row justify-content-center">
-        <div class="col-3">
-            <h1 class="text-center" data-countup='{"startVal": 0}' data-to="{{ countCA }}" data-aos data-aos-id="countup:in"> €</h1>
-            <p class="text-center">de chiffre d'affaire produit.</p>
-        </div>
+{% if countRecomms %}
+    {% set ant = 17300 %}
+    {% set antre = 9 %}
+    {% for countRecomm in countRecomms %}
+        <section>
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <div class="d-flex justify-content-center">
+                        <h1 class="text-center" data-countup='{"startVal": 0}' data-to="{{ countRecomm.ca + ant }}" ></h1><h1> €</h1>
+                    </div>
+                    <p class="text-center">de chiffre d'affaires produit.</p>
+                </div>
 
-        <div class="col-3">
-            <h1 class="text-center" data-countup='{"startVal": 0}' data-to="{{ countRecom }}" data-aos data-aos-id="countup:in"></h1>
-            <p class="text-center">Recommendations réalisées entre membre du groupe.</p>
-        </div>
+                <div class="col-3">
+                    <h1 class="text-center" data-countup='{"startVal": 0}' data-to="{{ countRecomm.recomm + antre }}" ></h1>
+                    <p class="text-center">Recommandations réalisées entre membres du groupe.</p>
+                </div>
 
-        <div class="col-3">
-            <h1 class="text-center" data-countup='{"startVal": 0}' data-to="{{ countCA }}" data-aos data-aos-id="countup:in"></h1>
-            <p class="text-center">d'adhérent depuis son lancement</p>
+                <div class="col-3">
+                    <h1 class="text-center" data-countup='{"startVal": 0}' data-to="{{ CountMembers|length }}"></h1>
+                    <p class="text-center">adhérents depuis son lancement.</p>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
+{% else %}
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-3">
+                <div class="d-flex justify-content-center">
+                    <h1 class="text-center" data-countup='{"startVal": 0}' data-to="17300" ></h1><h1> €</h1>
+                </div>
+                <p class="text-center">de chiffre d'affaires produit.</p>
+            </div>
+
+            <div class="col-3">
+                <h1 class="text-center" data-countup='{"startVal": 0}' data-to="9" ></h1>
+                <p class="text-center">Recommandations réalisées entre membres du groupe.</p>
+            </div>
+
+            <div class="col-3">
+                <h1 class="text-center" data-countup='{"startVal": 0}' data-to="{{ CountMembers|length }}"></h1>
+                <p class="text-center">adhérents depuis son lancement.</p>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endif %}

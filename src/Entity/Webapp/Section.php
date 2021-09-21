@@ -131,7 +131,7 @@ class Section
     /**
      * @ORM\Column(type="integer")
      */
-    private $positionfavorite;
+    private $positionfavorite = false;
 
 
     /**

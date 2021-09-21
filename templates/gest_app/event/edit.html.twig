@@ -33,6 +33,27 @@
                 time_24hr: true
             });
         }
+
+        // function definition de l'orientation de l'image
+        function onClickimgOrient(event){
+            event.preventDefault();
+            const url = this.href;
+            const icone = this.querySelector('i');
+            axios
+                .post(url)
+                .then(function(response){
+                    if(icone.classList.contains('text-muted')) {
+                        icone.classList.replace('text-muted', 'text-primary');
+                        icone.classList.replace('text-primary', 'text-muted');
+                    };
+                });
+        }
+
+        // Ajout d'un event sur le click portrait ou paysage
+        document.querySelectorAll('a.img-orientation').forEach(function (link){
+            link.addEventListener('click', onClickimgOrient);
+        })
+
     </script>
 {%  endblock %}
 

@@ -6,6 +6,7 @@ use App\Entity\GestApp\EventGal;
 use App\Form\GestApp\EventGalType;
 use App\Repository\GestApp\EventGalRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,7 @@ class EventGalController extends AbstractController
      */
     public function index(EventGalRepository $eventGalRepository): Response
     {
+
         return $this->render('gest_app/event_gal/index.html.twig', [
             'event_gals' => $eventGalRepository->findAll(),
         ]);
@@ -29,13 +31,31 @@ class EventGalController extends AbstractController
     /**
      * @Route("/gest/app/eventgalpublish/{idevent}", name="op_gestapp_eventgal_eventgalpublish", methods={"GET"})
      */
-    public function EventGalPublish($idevent): Response
+    public function EventGalPublish($idevent, PaginatorInterface $paginator, Request $request): Response
     {
-        $eventGal = $this->getDoctrine()->getRepository(EventGal::class)->EventGalPublish($idevent);
-
+        $data = $this->getDoctrine()->getRepository(EventGal::class)->EventGalPublish($idevent);
+        $eventGal = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            20
+        );
         return $this->render('gest_app/event_gal/EventGalPublish.html.twig', [
             'event_gals' => $eventGal,
         ]);
+    }
+
+    /**
+     * @Route("/gest/app/eventgal/{id}/{orientation}", name="op_gestapp_eventgal_orientation", methods={"POST"})
+     */
+    public function EventGalOrientation(EventGal $eventGal, $orientation): Response
+    {
+        $eventGal->setOrientation($orientation);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'orientation a été validée",
+        ], 200);
     }
 
     /**

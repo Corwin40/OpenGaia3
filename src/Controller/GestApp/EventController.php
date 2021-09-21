@@ -89,7 +89,7 @@ class EventController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
 
-            // partie de code pour envoyer un email au membre recommandé
+            // partie de code pour envoyer un email au Just
             $email = (new Email())
                 ->from('postmaster@openpixl.fr')
                 ->to('xavier.burke@openpixl.fr')
@@ -100,7 +100,8 @@ class EventController extends AbstractController
                 ->subject('JUSTàFaire - une nouvelle recommandation a été émise depuis le site')
                 //->text('Sending emails is fun again!')
                 ->html('
-                    <h1>Just à Faire<small> - Nouvelle évenement créer</small></h1>
+                    <h1>Just à Faire<small> - Nouvel évenement créé</small></h1>
+                    <p>Un nouvel évèneent a été crée par : <br>Vous pouvez voir ce dernier dans votre espace.</p>
                     ');
             $mailer->send($email);
 
@@ -207,7 +208,9 @@ class EventController extends AbstractController
 
     public function historyOfEventPublish()
     {
-        $events = $this->getDoctrine()->getRepository(Event::class)->findBy(array('isPublish'=> 1));
+        $date = new \DateTimeImmutable();
+        $current = $date->format('Y-m-d');
+        $events = $this->getDoctrine()->getRepository(Event::class)->ListAllEventPublishHistory($current);
 
         return $this->render('gest_app/event/history.html.twig', [
             'events' => $events,

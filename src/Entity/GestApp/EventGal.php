@@ -81,6 +81,11 @@ class EventGal
     private $event;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $orientation;
+
+    /**
      * Permet d'initialiser le slug !
      * Utilisation de slugify pour transformer une chaine de caractères en slug
      * @ORM\PrePersist
@@ -227,6 +232,18 @@ class EventGal
     public function setEvent(?Event $event): self
     {
         $this->event = $event;
+
+        return $this;
+    }
+
+    public function getOrientation(): ?string
+    {
+        return $this->orientation;
+    }
+
+    public function setOrientation(?string $orientation): self
+    {
+        $this->orientation = $orientation;
 
         return $this;
     }

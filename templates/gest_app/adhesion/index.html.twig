@@ -75,7 +75,7 @@
             <div class="col-10">
                 <div class="card">
                     <div class="card-body">
-                        <h4>Liste des adhesions</h4>
+                        <h4>Liste des demandes d'adhésions</h4>
                         <p>Créer, Modifier ou supprimer des adhésions</p>
                         <div class="row">
                             <div class="col-12">
@@ -100,7 +100,7 @@
                                     {% for adhesion in adhesions %}
                                         <tr class="align-middle">
                                             <td><input type="checkbox"></td>
-                                            <td>{{ adhesion.firstName }} {{ adhesion.lastName }}</td>
+                                            <td><a href="{{ path('op_gestapp_adhesion_show', {'id':adhesion.id}) }}"><b>{{ adhesion.firstName }} {{ adhesion.lastName }}</b></a></td>
                                             <td>{{ adhesion.society }}</td>
                                             <td>{{ adhesion.email }}</td>
                                             <td>{{ adhesion.siret }}</td>
@@ -112,7 +112,6 @@
                                             <td>{{ adhesion.createdAt ? adhesion.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                             <td>
                                                 <a href="{{ path('op_gestapp_adhesion_show', {'id': adhesion.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
-                                                <a href="{{ path('op_gestapp_adhesion_edit', {'id': adhesion.id}) }}"><i class="far fa-edit"></i></a>&nbsp;
                                                 <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ adhesion.id }}">
                                                     <i class="fas fa-eraser"></i>
                                                 </a>

@@ -1,98 +1,228 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Adhesion{% endblock %}
 
-{% block body %}
-    <h1>Adhesion</h1>
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            function onclickUpdateMember(event){
+                event.preventDefault();
+                const url = this.url;
+                const nameSociety = document.getElementById('nameSociety').value;
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const address = document.getElementById('address').value;
+                const zipcode = document.getElementById('zipcode').value;
+                const city = document.getElementById('city').value;
+                const gerantFirstName = document.getElementById('gerantFirstName').value;
+                const gerantLastName = document.getElementById('gerantLastName').value;
+                const siret = document.getElementById('siret').value;
+                const phoneDesk = document.getElementById('phoneDesk').value;
+                const phoneGsm = document.getElementById('phoneGsm').value;
+                const email = document.getElementById('email').value;
+                const urlFacebook = document.getElementById('urlFacebook').value;
+                const urlInstagram = document.getElementById('urlInstagram').value;
+                const urlLinkedin = document.getElementById('urlLinkedin').value;
+                const firstActivity = document.getElementById('firstActivity').value;
+                const secondActivity = document.getElementById('secondActivity').value;
+                const projectDev = document.getElementById('projectDev').value;
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ adhesion.id }}</td>
-            </tr>
-            <tr>
-                <th>Society</th>
-                <td>{{ adhesion.society }}</td>
-            </tr>
-            <tr>
-                <th>FirstName</th>
-                <td>{{ adhesion.firstName }}</td>
-            </tr>
-            <tr>
-                <th>LastName</th>
-                <td>{{ adhesion.lastName }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ adhesion.address }}</td>
-            </tr>
-            <tr>
-                <th>Zipcode</th>
-                <td>{{ adhesion.zipcode }}</td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>{{ adhesion.city }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ adhesion.email }}</td>
-            </tr>
-            <tr>
-                <th>Siret</th>
-                <td>{{ adhesion.siret }}</td>
-            </tr>
-            <tr>
-                <th>Gerant</th>
-                <td>{{ adhesion.gerant }}</td>
-            </tr>
-            <tr>
-                <th>UrlWeb</th>
-                <td>{{ adhesion.urlWeb }}</td>
-            </tr>
-            <tr>
-                <th>UrlFacebook</th>
-                <td>{{ adhesion.urlFacebook }}</td>
-            </tr>
-            <tr>
-                <th>UrlInstagram</th>
-                <td>{{ adhesion.urlInstagram }}</td>
-            </tr>
-            <tr>
-                <th>UrlLinkedin</th>
-                <td>{{ adhesion.urlLinkedin }}</td>
-            </tr>
-            <tr>
-                <th>IsGroupeEntreprendre</th>
-                <td>{{ adhesion.isGroupeEntreprendre ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>FirstActivity</th>
-                <td>{{ adhesion.firstActivity }}</td>
-            </tr>
-            <tr>
-                <th>SecondActivity</th>
-                <td>{{ adhesion.secondActivity }}</td>
-            </tr>
-            <tr>
-                <th>ProjectDev</th>
-                <td>{{ adhesion.projectDev }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ adhesion.createdAt ? adhesion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ adhesion.updatedAt ? adhesion.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                axios
+                    .post(url, {recoprice:recoprice})
+                    .then(function(response) {
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 4000,
+                        };
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                ;
 
-    <a href="{{ path('gest_app_adhesion_index') }}">back to list</a>
+            }
 
-    <a href="{{ path('gest_app_adhesion_edit', {'id': adhesion.id}) }}">edit</a>
+            // Ajout d'un event sur Bouton de suppression de la ligne en cours
+            document.querySelectorAll('a.UpdateMember').forEach(function(link){
+                link.addEventListener('click', onclickUpdateMember)
+            })
+        }
+    </script>
+{% endblock %}
 
-    {{ include('gest_app_adhesion/_delete_form.html.twig') }}
+{% block content %}
+<div class="container-fluid">
+    {{ include('gest_app/adhesion/include/_section_content_header.html.twig') }}
+    <section id="op_admin_content_body">
+        <div class="row g-2">
+            <div class="col-2">
+                {{ include('gest_app/adhesion/include/_section_content_aside.html.twig') }}
+            </div>
+            <div class="col-10">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Liste de adhésions</h4>
+                        <p>Créer, Modifier ou supprimer des recommandations du site.</p>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-xl-6">
+                                <h5>LA SOCIETE</h5>
+                                <hr>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Nom de la societé :
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.society }}" id="nameSociety">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Adhérent :
+                                    </div>
+                                    <div class="col-4">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.firstName }}" id="firstName">
+                                    </div>
+                                    <div class="col-4">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.lastName }}" id="lastName">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Adresse :
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.address }}" id="address">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Code postal / Ville
+                                    </div>
+                                    <div class="col-2">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.zipcode }}" id="zipcode">
+                                    </div>
+                                    <div class="col-7">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.city }}" id="city">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Gérant :
+                                    </div>
+                                    <div class="col-4">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.gerantFirstname }}" id="gerantFirstname">
+                                    </div>
+                                    <div class="col-4">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.gerantLastname }}" id="gerantLastname">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        SIRET de la société
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.siret }}" id="siret">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-lg-6 col-xl-6">
+                                <h5>CONTACTS</h5>
+                                <hr>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Téléphone :
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.phoneDesk }}" id="phoneDesk">
+                                    </div>
+                                    <div class="col-3">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.phoneGsm }}" id="phoneGsm">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Email :
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.email }}" id="email">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Adresse du site web :
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.urlWeb }}" id="urlWeb">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        Réseaux sociaux :
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="input-group input-group-sm mb-1">
+                                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-facebook"></i></span>
+                                            <input type="text" class="form-control form-control-sm" value="{{ adhesion.urlFacebook }}" id="urlFacebook">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-1">
+                                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-instagram"></i></span>
+                                            <input type="text" class="form-control form-control-sm" value="{{ adhesion.urlInstagram }}" id="urlInstagram">
+                                        </div>
+                                        <div class="input-group input-group-sm mb-1">
+                                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-linkedin"></i></span>
+                                            <input type="text" class="form-control form-control-sm" value="{{ adhesion.urlLinkedin }}" id="urlLinkedin">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    Membre d'un réseau
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <h5>ACTIVITES</h5>
+                                <hr>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        <p>Activité principale</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.firstActivity }}" id="firstActivity">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        <p>Activité secondaire</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.secondActivity }}" id="secondActivity">
+                                    </div>
+                                </div>
+                                <div class="row mb-1 g-1">
+                                    <div class="col-3">
+                                        <p>Projet de développement</p>
+                                    </div>
+                                    <div class="col-9">
+                                        <input class="form-control form-control-sm" type="text" value="{{ adhesion.projectDev }}" id="projectDev">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_adhesion_index') }}">Retour à la liste</a>
+                        <a class="btn btn-sm btn-primary updateMember" href="{{ path('op_gestapp_adhesion_addMember', {'id': adhesion.id}) }}">Créer le compte</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

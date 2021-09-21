@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parrainage{% endblock %}
+
+{% block body %}
+    <h1>Parrainage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ parrainage.id }}</td>
+            </tr>
+            <tr>
+                <th>ParrainageFirstname</th>
+                <td>{{ parrainage.ParrainageFirstname }}</td>
+            </tr>
+            <tr>
+                <th>ParrainageLastname</th>
+                <td>{{ parrainage.parrainageLastname }}</td>
+            </tr>
+            <tr>
+                <th>ParrainageEmail</th>
+                <td>{{ parrainage.parrainageEmail }}</td>
+            </tr>
+            <tr>
+                <th>IsCotisation</th>
+                <td>{{ parrainage.isCotisation ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_parrainage_index') }}">back to list</a>
+
+    <a href="{{ path('admin_parrainage_edit', {'id': parrainage.id}) }}">edit</a>
+
+    {{ include('admin_parrainage/_delete_form.html.twig') }}
+{% endblock %}

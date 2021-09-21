@@ -2,7 +2,11 @@
 
 namespace App\Form\Admin;
 
+use App\Entity\Admin\Member;
 use App\Entity\Admin\Message;
+use App\Entity\Webapp\Category;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -14,12 +18,11 @@ class MessageType extends AbstractType
         $builder
             ->add('subject')
             ->add('content')
-            ->add('isRead')
-            ->add('follow')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('author')
-            ->add('recipient')
+            ->add('recipient',EntityType::class, [
+                'class' => Member::class,
+                'multiple' => true,
+                'choice_label' => 'username'
+            ])
         ;
     }
 

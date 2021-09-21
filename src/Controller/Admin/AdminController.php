@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Admin\Annonce;
 use App\Entity\Admin\Member;
 use App\Entity\Admin\Message;
+use App\Entity\Admin\Parrainage;
 use App\Entity\GestApp\Event;
 use App\Entity\GestApp\Recommandation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,12 +27,14 @@ class AdminController extends AbstractController
         $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)->findAll();
         $messages = $this->getDoctrine()->getRepository(Message::class)->MessagesByUser($user);
+        $invitations = $this->getDoctrine()->getRepository(Parrainage::class)->findBy(array('author' => $user));
         return $this->render('admin/admin/index.html.twig', [
             'members' => $members,
             'recommandations' => $recommandations,
             'events' => $events,
             'annonces' => $annonces,
             'messages' => $messages,
+            'invitations' => $invitations,
         ]);
     }
 }

@@ -29,10 +29,10 @@ class ArticleType extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('articleFrontFile', VichImageType::class, [
-            'required' => false,
-            'allow_delete' => true,
-            'delete_label' => 'Supprimer',
-            'download_label' => 'Télecharger',
+                'required' => false,
+                'allow_delete' => true,
+                'delete_label' => 'Supprimer',
+                'download_label' => 'Télecharger',
             ])
             ->add('state', ChoiceType::class, [
                 'choices'  => [
@@ -44,13 +44,14 @@ class ArticleType extends AbstractType
                 'choices'  => [
                     'à droite du contenu' => 'right',
                     'à gauche du contenu' => 'left',
+                    'au dessus du contenu' => 'up',
+                    'en dessous du contenu' => 'down',
                     'sans texte' => 'none'
                 ],
             ])
             ->add('isReadMore')
             ->add('isShowtitle')
-            ->add('isShowdate')
-        ;
+            ->add('isShowdate');
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -50,9 +50,88 @@
                         })
                 }
 
+            // Soumission du formulaire ajout parrainage
+            function onClickAddParrainageSubmit(event){
+                event.preventDefault();
+                const url = '/admin/parrainage/add';
+                const parrainageFirstname = document.getElementById('parrainage_parrainageFirstname').value;
+                const parrainageLastname = document.getElementById('parrainage_parrainageLastname').value;
+                const phoneDesk = document.getElementById('parrainage_phoneDesk').value;
+                const phoneGsm =document.getElementById('parrainage_phoneGsm').value;
+                const parrainageEmail = document.getElementById('parrainage_parrainageEmail').value;
+                const nameSociety = document.getElementById('parrainage_nameSociety').value;
+                axios
+                    .post(url, {parrainageFirstname:parrainageFirstname, parrainageLastname:parrainageLastname, phoneDesk:phoneDesk, phoneGsm: phoneGsm, parrainageEmail:parrainageEmail, nameSociety:nameSociety})
+                    .then(function (response){
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastHeader = toastHTMLElement.querySelector('.toast-header');
+                        var toastBody = toastHTMLElement.querySelector('.toast-body'); // selection de l'élément possédant le message
+                        toastHeader.textContent = 'Invitation'
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                        // reset des inputs
+
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Soumission du formulaire ajout parrainage
+            function onClickAddMessageSubmit(event){
+                event.preventDefault();
+                const url = '/opadmin/parrainage/add';
+                const subject = document.getElementById('message_subject').value;
+                const recipient = document.getElementById('message_recipient').value;
+                const content = document.getElementById('message_content').value;
+                axios
+                    .post(url, {subject:subject, recipient:recipient, content:content})
+                    .then(function (response){
+                        // préparation du toaster
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        // initialisation du toaster
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastHeader = toastHTMLElement.querySelector('.toast-header');
+                        var toastBody = toastHTMLElement.querySelector('.toast-body'); // selection de l'élément possédant le message
+                        toastHeader.textContent = 'Messages'
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                        // reset des inputs
+
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
             // évènement sur le clic d'envoie formulaire
             document.querySelectorAll('a.js-add-annonce').forEach(function(link){
                 link.addEventListener('click', onClickAddAnnonceSubmit)
+            })
+
+            // évènement sur le clic d'envoie formulaire
+            document.querySelectorAll('a.js-add-message').forEach(function(link){
+                link.addEventListener('click', onClickAddMessageSubmit)
+            })
+
+            // évènement sur le clic d'invité
+            document.querySelectorAll('a.js-add-invitation').forEach(function(link){
+                link.addEventListener('click', onClickAddParrainageSubmit)
             })
         }
     </script>
@@ -66,7 +145,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="offset-6 col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <div class="offset-lg-6 offset-xl-6 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="card">
                 <div class="card-body">
                     {{ render(controller('App\\Controller\\Admin\\AnnonceController::publishDashboard')) }}
@@ -78,21 +157,22 @@
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
             <div class="card border-primary">
                 <div class="card-body">
-                    <h3>{{ members|length }} Membres</h3>
+                    <h5><span class="count-vignette">{{ members|length }}</span></h5>
+                    <p>Membres</p>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
             <div class="card border-primary">
                 <div class="card-body">
-                    <h3>{{ recommandations|length }} Recommandations</h3>
+                    <h5>{{ recommandations|length }} Recommandations</h5>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl2">
             <div class="card border-primary">
                 <div class="card-body">
-                    <h3>{{ events|length }} Evènements</h3>
+                    <h5>{{ events|length }} Evènements</h5>
                 </div>
             </div>
         </div>
@@ -100,25 +180,35 @@
             <div class="card border-primary">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <div><h3>{{ events|length }} Annonces</h3></div>
-                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#Add"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                        <div><h5>{{ annonces|length }} Annonces</h5></div>
+                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#AddAnnonce"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl2">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
             <div class="card border-primary">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
-                        <div><h3>{{ messages|length }} Messages</h3></div>
-                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#Add"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                        <div><h5>{{ messages|length }} Messages</h5></div>
+                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#AddMessage"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div><h5>{{ invitations|length }} Invitation</h5></div>
+                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#AddInvitation"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="card">
                 <div class="card-body">
                     <ul class="nav nav-tabs">
@@ -145,7 +235,7 @@
             </div>
 
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
             <div class="row">
                 <div class="col-12">
                     <div class="card">

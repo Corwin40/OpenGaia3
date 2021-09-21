@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Admin\Member;
 use App\Entity\GestApp\Recommandation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,13 +27,14 @@ class StatistiqueController extends AbstractController
     public function CountUp()
     {
         // requete pour calculer le chiffre d'affiare du Just
-        //$countCA = $this->getDoctrine()->getRepository(Recommandation::class)->CountCA();
+        $countRecomms = $this->getDoctrine()->getRepository(Recommandation::class)->CountCA();
+        $CountMembers = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type'=>'member'));
         // requete pour calculer le nombre de recommandation du Just
         //$countRecom = $this->getDoctrine()->getRepository(Recommandation::class)->CountRecom();
 
         return $this->render('admin/admin/countup.html.twig', [
-            'countCA' => 10000,
-            'countRecom' => 154,
+            'countRecomms' => $countRecomms,
+            'CountMembers' => $CountMembers
         ]);
     }
 }

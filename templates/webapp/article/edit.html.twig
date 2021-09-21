@@ -7,13 +7,74 @@
     <script type="text/javascript">
         window.onload = function(){
             ClassicEditor
-                .create(document.querySelector('#article_content'), {
-                    toolbar: [ 'heading','bold', 'italic', 'bulletedList', 'numberedList', 'blockQuote', 'indent', 'alignment', 'code', 'CodeBlock', 'Underline', 'HtmlEmbed' ],
-                    height: 50
-                })
-                .catch(error => {
-                    console.error(error);
-                });
+                .create( document.querySelector( '#article_content' ), {
+                    toolbar: {
+                        items: [
+                            'heading',
+                            '|',
+                            'bold',
+                            'italic',
+                            'underline',
+                            'fontBackgroundColor',
+                            'fontColor',
+                            'fontSize',
+                            'fontFamily',
+                            '|',
+                            'removeFormat',
+                            'link',
+                            'bulletedList',
+                            'numberedList',
+                            'sourceEditing',
+                            '|',
+                            'outdent',
+                            'alignment',
+                            'indent',
+                            '|',
+                            'imageUpload',
+                            'blockQuote',
+                            'insertTable',
+                            'mediaEmbed',
+                            'undo',
+                            'redo',
+                            'code',
+                            'codeBlock',
+                            'highlight',
+                            'horizontalLine',
+                            'imageInsert',
+                            'pageBreak',
+                            'specialCharacters'
+                        ]
+                    },
+                    language: 'fr',
+                    image: {
+                        toolbar: [
+                            'imageTextAlternative',
+                            'imageStyle:inline',
+                            'imageStyle:block',
+                            'imageStyle:side',
+                            'linkImage'
+                        ]
+                    },
+                    table: {
+                        contentToolbar: [
+                            'tableColumn',
+                            'tableRow',
+                            'mergeTableCells',
+                            'tableCellProperties',
+                            'tableProperties'
+                        ]
+                    },
+                    licenseKey: '',
+                } )
+                .then( editor => {
+                    window.editor = editor;
+                } )
+                .catch( error => {
+                    console.error( 'Oops, something went wrong!' );
+                    console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
+                    console.warn( 'Build id: yjllw57wc9zk-mp9spyi3vipf' );
+                    console.error( error );
+                } );
         }
     </script>
 {% endblock %}

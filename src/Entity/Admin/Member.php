@@ -182,7 +182,7 @@ class Member implements UserInterface
     private $type;
 
     /**
-     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="producer")
+     * @ORM\OneToMany(targetEntity=Product::class, mappedBy="producer", orphanRemoval=true)
      */
     private $products;
 
@@ -192,27 +192,27 @@ class Member implements UserInterface
     private $structure;
 
     /**
-     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Event::class, mappedBy="author", orphanRemoval=true)
      */
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity=Recommandation::class, mappedBy="member")
+     * @ORM\OneToMany(targetEntity=Recommandation::class, mappedBy="member", orphanRemoval=true)
      */
     private $recommandations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Recommandation::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Recommandation::class, mappedBy="author", orphanRemoval=true)
      */
     private $authorReco;
 
     /**
-     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="author", orphanRemoval=true)
      */
     private $annonce;
 
     /**
-     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author", orphanRemoval=true)
      */
     private $authormessages;
 
@@ -220,6 +220,11 @@ class Member implements UserInterface
      * @ORM\ManyToMany(targetEntity=Message::class, mappedBy="recipient")
      */
     private $recipientmessage;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Parrainage::class, mappedBy="author")
+     */
+    private $parraingesAuthor;
 
 
     public function __construct()
@@ -234,6 +239,7 @@ class Member implements UserInterface
         $this->messages = new ArrayCollection();
         $this->authormessages = new ArrayCollection();
         $this->recipientmessage = new ArrayCollection();
+        $this->parraingesAuthor = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -798,6 +804,36 @@ class Member implements UserInterface
     {
         if ($this->recipientmessage->removeElement($recipientmessage)) {
             $recipientmessage->removeRecipient($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Parrainage[]
+     */
+    public function getParraingesAuthor(): Collection
+    {
+        return $this->parraingesAuthor;
+    }
+
+    public function addParraingesAuthor(Parrainage $parraingesAuthor): self
+    {
+        if (!$this->parraingesAuthor->contains($parraingesAuthor)) {
+            $this->parraingesAuthor[] = $parraingesAuthor;
+            $parraingesAuthor->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParraingesAuthor(Parrainage $parraingesAuthor): self
+    {
+        if ($this->parraingesAuthor->removeElement($parraingesAuthor)) {
+            // set the owning side to null (unless already changed)
+            if ($parraingesAuthor->getAuthor() === $this) {
+                $parraingesAuthor->setAuthor(null);
+            }
         }
 
         return $this;

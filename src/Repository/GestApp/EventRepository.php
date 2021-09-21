@@ -21,6 +21,46 @@ class EventRepository extends ServiceEntityRepository
 
     public function ListAllEventPublish($current)
     {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery(
+                "
+                SELECT 
+                    e.id, 
+                    e.name, 
+                    e.description,
+                    e.visuelName,
+                    e.isPublish,
+                    e.eventAt,
+                    e.eventtimeAt,
+                    e.placeAddress,
+                    e.placeComplement,
+                    e.placeZipcode,
+                    e.placeCity,
+                    e.isValidBy,
+                    e.urlFacebookEvent,
+                    e.urlInstagramEvent
+                FROM App\Entity\GestApp\Event e
+                WHERE e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt >= :current
+                ORDER BY e.eventAt ASC
+                "
+            )
+            ->setParameter('isPublish', 1)
+            ->setParameter('isValidBy', 1)
+            ->setParameter( 'current', $current)
+        ;
+
+        // Retourne un tabelau associatif
+        return $query->getResult();
+    }
+
+    /**
+     * @param $current
+     * @return int|mixed|string
+     * Liste les évènement passés du JUST
+     */
+    public function ListAllEventPublishHistory($current)
+    {
         return $this->createQueryBuilder('e')
             ->addSelect('
                 e.id, 
@@ -34,13 +74,15 @@ class EventRepository extends ServiceEntityRepository
                 e.placeComplement,
                 e.placeZipcode,
                 e.placeCity,
-                e.isValidBy
+                e.isValidBy,
+                e.urlFacebookEvent,
+                e.urlInstagramEvent
                  ')
-            ->andWhere('e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt > :current')
+            ->andWhere('e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt < :current')
             ->setParameter('isPublish', 1)
             ->setParameter('isValidBy', 1)
             ->setParameter( 'current', $current)
-            ->orderBy('e.eventAt', 'DESC')
+            ->orderBy('e.eventAt', 'desc')
             ->getQuery()
             ->getResult()
             ;

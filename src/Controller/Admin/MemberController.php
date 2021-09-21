@@ -188,7 +188,8 @@ class MemberController extends AbstractController
         $user = $this->getUser();
         $isVerified = $member->getIsVerified();
         // renvoie une erreur car l'utilisateur n'est pas connecté
-        if(!$user) return $this->json([
+        if(!$user)
+            return $this->json([
             'code' => 403,
             'message'=> "Vous n'êtes pas connecté"
         ], 403);
@@ -211,14 +212,25 @@ class MemberController extends AbstractController
     {
         $Structure = $member->getStructure();
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($member);
-        $entityManager->remove($Structure);
-        $entityManager->flush();
+        if(!$Structure){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($member);
+            $entityManager->flush();
 
-        return $this->json([
-            'code'=> 200,
-            'message' => "Le membre a été supprimé"
-        ], 200);
+            return $this->json([
+                'code'=> 200,
+                'message' => "Le membre a été supprimé"
+            ], 200);
+        }else{
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($member);
+            $entityManager->remove($Structure);
+            $entityManager->flush();
+
+            return $this->json([
+                'code'=> 200,
+                'message' => "Le membre et sa structure ont été supprimé"
+            ], 200);
+        }
     }
 }
