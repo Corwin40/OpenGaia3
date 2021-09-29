@@ -30,11 +30,11 @@ class StatistiqueController extends AbstractController
         $countRecomms = $this->getDoctrine()->getRepository(Recommandation::class)->CountCA();
         $CountMembers = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type'=>'member'));
         // requete pour calculer le nombre de recommandation du Just
-        //$countRecom = $this->getDoctrine()->getRepository(Recommandation::class)->CountRecom();
+        // $recoms = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
 
         return $this->render('admin/admin/countup.html.twig', [
             'countRecomms' => $countRecomms,
-            'CountMembers' => $CountMembers
+            'CountMembers' => $CountMembers,
         ]);
     }
 }
