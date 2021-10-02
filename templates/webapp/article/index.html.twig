@@ -15,39 +15,9 @@
                     <div class="card-body">
                         <h4>Liste des articles</h4>
                         <p>Créer, Modifier ou supprimer des articles du site</p>
-                        <table class="table align-middle">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Category</th>
-                                    <th>CreateAt</th>
-                                    <th>UpdateAt</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for article in articles %}
-                                <tr>
-                                    <td>{{ article.id }}</td>
-                                    <td><strong>{{ article.title }}</strong><br><small>{{ article.slug }}</small></td>
-                                    <td>{{ article.description }}</td>
-                                    <td>{{ article.category }}</td>
-                                    <td>{{ article.createdAt ? article.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                    <td>{{ article.updatedAt ? article.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                    <td>
-                                        <a href="{{ path('op_webapp_article_show', {'id': article.id}) }}">show</a>
-                                        <a href="{{ path('op_webapp_article_edit', {'id': article.id}) }}">edit</a>
-                                    </td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="8">no records found</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                        <div id="liste">
+                            {{ include('webapp/article/include/_liste.html.twig') }}
+                        </div>
                     </div>
                 </div>
             </div>

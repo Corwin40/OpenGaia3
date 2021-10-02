@@ -21,7 +21,7 @@ use Symfony\Component\Mime\Email;
 class MemberController extends AbstractController
 {
     /**
-     * @Route("/admin/member/", name="op_admin_member_index", methods={"GET"})
+     * @Route("/op_admin/member/", name="op_admin_member_index", methods={"GET"})
      */
     public function index(MemberRepository $memberRepository): Response
     {
@@ -31,7 +31,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/member/vue", name="op_admin_member_vuefront", methods={"GET"})
+     * @Route("/webapp/member/vue", name="op_webapp_member_vuefront", methods={"GET"})
      */
     public function vueFront(MemberRepository $memberRepository): Response
     {
@@ -43,7 +43,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/member/new", name="op_admin_member_new", methods={"GET","POST"})
+     * @Route("/op_admin/member/new", name="op_admin_member_new", methods={"GET","POST"})
      */
     public function new(Request $request,UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
     {
@@ -91,7 +91,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/member/{id}", name="op_admin_member_show", methods={"GET"})
+     * @Route("/op_admin/member/{id}", name="op_admin_member_show", methods={"GET"})
      */
     public function show(Member $member): Response
     {
@@ -101,7 +101,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/member/{id}/edit", name="op_admin_member_edit", methods={"GET","POST"})
+     * @Route("/op_admin/member/{id}/edit", name="op_admin_member_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Member $member): Response
     {
@@ -123,7 +123,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/member/{id}/edit2", name="op_admin_member_edit2", methods={"GET","POST"})
+     * @Route("/op_admin/member/{id}/edit2", name="op_admin_member_edit2", methods={"GET","POST"})
      */
     public function edit2(Request $request, Member $member): Response
     {
@@ -206,7 +206,7 @@ class MemberController extends AbstractController
     }
 
     /**
-     * @Route("/admin/member/del/{id}", name="op_admin_member_del", methods={"POST"})
+     * @Route("/op_admin/member/del/{id}", name="op_admin_member_del", methods={"POST"})
      */
     public function Del(Request $request, Member $member) : Response
     {

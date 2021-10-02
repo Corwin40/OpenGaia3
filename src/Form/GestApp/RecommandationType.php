@@ -33,7 +33,7 @@ class RecommandationType extends AbstractType
                     return $er->createQueryBuilder('m')
                         ->orderBy('m.id', 'ASC');
                 },
-                'choice_label' => 'username',
+                'choice_label' => 'structure',
             ])
         ;
     }

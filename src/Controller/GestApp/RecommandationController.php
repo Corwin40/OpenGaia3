@@ -2,6 +2,7 @@
 
 namespace App\Controller\GestApp;
 
+use App\Entity\Admin\Parameter;
 use App\Entity\GestApp\Recommandation;
 use App\Form\GestApp\RecommandationType;
 use App\Repository\GestApp\RecommandationRepository;
@@ -82,18 +83,18 @@ class RecommandationController extends AbstractController
             $entityManager->persist($recommandation);
             $entityManager->flush();
 
-            //récupération de l'adresse mail pour le membre recommandé
+            // récupération des données pour la génération des mails à envoyer
             $author = $recommandation->getAuthor();
             $membre = $recommandation->getMember();
+            $structure = $membre->getStructure();
+            $emailsupervisor = $structure->getEmailStruct();
             $firstNameDesti = $membre->getFirstName();
             $lastNameDesti = $membre->getLastName();
             $email = $membre->getEmail();
 
             $titleRecom = $recommandation->getName();
 
-            // dd($author, $destinataire);
-
-            // partie de code pour envoyer un email au membre recommandé
+            // Envoi du mail de nouvelle recomandation au membre recommandé
             $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
                 ->to($email)
@@ -101,7 +102,7 @@ class RecommandationController extends AbstractController
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUST à FAIRE - une nouvelle recommandation vous attends dans votre espace')
+                ->subject("JUST à FAIRE - une nouvelle recommandation vous attend dans l'espace JUST.")
                 //->text('Sending emails is fun again!')
                 ->htmlTemplate('email/newRecommandation.html.twig')
                 ->context([
@@ -112,7 +113,124 @@ class RecommandationController extends AbstractController
                 ]);
             $mailer->send($email);
 
-            // partie de code pour envoyer un email à Just
+            // Envoi du mail de nouvelle recomandation à la structure recommandée
+            $email = (new TemplatedEmail())
+                ->from('postmaster@openpixl.fr')
+                ->to($emailsupervisor)
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUST à FAIRE - une nouvelle recommandation a été posté.')
+                //->text('Sending emails is fun again!')
+                ->htmlTemplate('email/newRecommandation.html.twig')
+                ->context([
+                    'author' => $author,
+                    'titleRecom' => $titleRecom,
+                    'prenomDestin' => $firstNameDesti,
+                    'nomDestin' => $lastNameDesti,
+                ]);
+            $mailer->send($email);
+
+            // Envoi du mail de nouvelle recomandation pour JUST
+            $email = (new TemplatedEmail())
+                ->from('postmaster@openpixl.fr')
+                ->to('contact@justafaire.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUST à FAIRE - une nouvelle recommandation a été émise depuis le site')
+                //->text('Sending emails is fun again!')
+                ->htmlTemplate('email/newRecommandationWebMaster.html.twig')
+                ->context([
+                    'author' => $author,
+                    'titleRecom' => $titleRecom,
+                    'prenomDestin' => $firstNameDesti,
+                    'nomDestin' => $lastNameDesti,
+                ]);
+            $mailer->send($email);
+
+            return $this->redirectToRoute('op_gestapp_recommandation_index');
+        }
+
+        return $this->render('gest_app/recommandation/new.html.twig', [
+            'recommandation' => $recommandation,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/op_admin/gestapp/recommandation/new", name="op_gestapp_recommandation_new", methods={"GET","POST"})
+     */
+    public function new_admin(Request $request, MailerInterface $mailer): Response
+    {
+        // récupération de l'adresse de la structure
+        $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+        //author
+
+        $recommandation = new Recommandation();
+        $form = $this->createForm(RecommandationType::class, $recommandation);
+        $recommandation->setRecoState('noRead');
+        $recommandation->setAuthor($user);
+        $recommandation->setIsFirstView(1);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($recommandation);
+            $entityManager->flush();
+
+            // récupération des données pour la génération des mails à envoyer
+            $author = $recommandation->getAuthor();
+            $membre = $recommandation->getMember();
+            $structure = $membre->getStructure();
+            $emailsupervisor = $structure->getEmailStruct();
+            $firstNameDesti = $membre->getFirstName();
+            $lastNameDesti = $membre->getLastName();
+            $email = $membre->getEmail();
+
+            $titleRecom = $recommandation->getName();
+
+            // Envoi du mail de nouvelle recomandation au membre recommandé
+            $email = (new TemplatedEmail())
+                ->from('postmaster@openpixl.fr')
+                ->to($email)
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject("JUST à FAIRE - une nouvelle recommandation vous attend dans l'espace JUST.")
+                //->text('Sending emails is fun again!')
+                ->htmlTemplate('email/newRecommandation.html.twig')
+                ->context([
+                    'author' => $author,
+                    'titleRecom' => $titleRecom,
+                    'prenomDestin' => $firstNameDesti,
+                    'nomDestin' => $lastNameDesti,
+                ]);
+            $mailer->send($email);
+
+            // Envoi du mail de nouvelle recomandation à la structure recommandée
+            $email = (new TemplatedEmail())
+                ->from('postmaster@openpixl.fr')
+                ->to($emailsupervisor)
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUST à FAIRE - une nouvelle recommandation a été posté.')
+                //->text('Sending emails is fun again!')
+                ->htmlTemplate('email/newRecommandation.html.twig')
+                ->context([
+                    'author' => $author,
+                    'titleRecom' => $titleRecom,
+                    'prenomDestin' => $firstNameDesti,
+                    'nomDestin' => $lastNameDesti,
+                ]);
+            $mailer->send($email);
+
+            // Envoi du mail de nouvelle recomandation pour JUST
             $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
                 ->to('contact@justafaire.fr')

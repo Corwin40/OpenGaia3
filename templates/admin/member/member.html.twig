@@ -154,7 +154,7 @@
                             <div class="col-xs-12 clo-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 <h3 class="text-end">Coordonnées & Responsable</h3>
                                 <p class="text-end">
-                                    Gérant : {{ member.respFirstName }} {{ member.respLastName }}<br>
+                                    {{ member.respFirstName }} {{ member.respLastName }}<br>
                                     <a href="mailto:{{ member.EmailStruct }}"><i class="fas fa-envelope-open-text"></i> {{ member.EmailStruct }}</a><br>
                                     {% if member.phoneDesk is null and member.phoneGsm is null %}
                                         Pas de coordonnées transmises.

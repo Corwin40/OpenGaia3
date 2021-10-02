@@ -252,9 +252,15 @@ class Structure
      */
     private $jaf;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Collaborator::class, mappedBy="structure")
+     */
+    private $collaborators;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->collaborators = new ArrayCollection();
     }
 
     /**
@@ -790,6 +796,36 @@ class Structure
     public function getIllustrationthirdSize(): ?int
     {
         return $this->illustrationthirdSize;
+    }
+
+    /**
+     * @return Collection|Collaborator[]
+     */
+    public function getCollaborators(): Collection
+    {
+        return $this->collaborators;
+    }
+
+    public function addCollaborator(Collaborator $collaborator): self
+    {
+        if (!$this->collaborators->contains($collaborator)) {
+            $this->collaborators[] = $collaborator;
+            $collaborator->setStructure($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCollaborator(Collaborator $collaborator): self
+    {
+        if ($this->collaborators->removeElement($collaborator)) {
+            // set the owning side to null (unless already changed)
+            if ($collaborator->getStructure() === $this) {
+                $collaborator->setStructure(null);
+            }
+        }
+
+        return $this;
     }
     
 }
