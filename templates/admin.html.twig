@@ -108,7 +108,20 @@
                         </div>
                     </div>
                 </div>
-
+                {% if app.request.attributes.get('_route') == 'op_admin_structure_index' %}
+                {# Modal pour ajouter un collaborateur depuis l'admin #}
+                <div class="modal fade" id="AddCollaborator" tabindex="-1" aria-labelledby="AddCollaborator" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        < class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Nouveau Collaborateur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            {{ render(controller('App\\Controller\\Admin\\CollaboratorController::new', {'idStructure': structure})) }}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative">
                     <div class="toast-container position-absolute bottom-100 end-0 p-3">
                         <div id="toaster" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

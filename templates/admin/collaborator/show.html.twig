@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Collaborator{% endblock %}
+
+{% block body %}
+    <h1>Collaborator</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ collaborator.id }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ collaborator.firstName }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ collaborator.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ collaborator.email }}</td>
+            </tr>
+            <tr>
+                <th>AvatarName</th>
+                <td>{{ collaborator.avatarName }}</td>
+            </tr>
+            <tr>
+                <th>AvatarSize</th>
+                <td>{{ collaborator.avatarSize }}</td>
+            </tr>
+            <tr>
+                <th>PhoneDesk</th>
+                <td>{{ collaborator.phoneDesk }}</td>
+            </tr>
+            <tr>
+                <th>PhoneGsm</th>
+                <td>{{ collaborator.phoneGsm }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ collaborator.createdAt ? collaborator.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ collaborator.updatedAt ? collaborator.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_collaborator_index') }}">back to list</a>
+
+    <a href="{{ path('admin_collaborator_edit', {'id': collaborator.id}) }}">edit</a>
+
+    {{ include('admin_collaborator/_delete_form.html.twig') }}
+{% endblock %}

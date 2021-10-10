@@ -2,6 +2,19 @@
 
 {% block title %}Structure index{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            var AddCollaborator = document.getElementById('AddCollaborator');
+            AddCollaborator.addEventListener('show.bs.modal', function (event){
+                var button = event.relatedTarget;
+                var structure = button.getAttribute('data-bs-whatever');
+            };
+        };
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     {{ include('admin/structure/include/_section_content_header.html.twig') }}
@@ -25,9 +38,8 @@
                                     <th>Email</th>
                                     <th>Bureau</th>
                                     <th>Mobile</th>
-                                    <th>Crée le</th>
-                                    <th>Modifiée le</th>
-                                    <th>actions</th>
+                                    <th>Collaborateur</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,8 +56,15 @@
                                     <td>{{ structure.EmailStruct }}</td>
                                     <td>{{ structure.phoneDesk }}</td>
                                     <td>{{ structure.phoneGsm }}</td>
-                                    <td>{{ structure.createdAt ? structure.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                    <td>{{ structure.updatedAt ? structure.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td>
+                                        {% if structure.collaborators|length > 0 %}
+                                            {% for collaborator in structure.collaborators %}
+                                                {{ structure.collaborators.firstname }} {{ structure.collaborators.firstname }}
+                                            {% endfor %}
+                                        {% else %}
+                                            <a href="#" id="btnAddCollaborator" data-bs-toggle="modal" data-bs-target="#AddCollaborator" data-bs-whatever="{{ structure }}">Ajouter</a>
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <a href="{{ path('op_admin_structure_show', {'id': structure.id}) }}">show</a>
                                         <a href="{{ path('op_admin_structure_edit2', {'id': structure.id}) }}">edit</a>
