@@ -49,8 +49,43 @@ class EventRepository extends ServiceEntityRepository
             ->setParameter('isValidBy', 1)
             ->setParameter( 'current', $current)
         ;
+        // Retourne le tableau associatif
+        return $query->getResult();
+    }
 
-        // Retourne un tabelau associatif
+    public function ListTwoDay($current)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager
+            ->createQuery(
+                "
+                SELECT 
+                    e.id, 
+                    e.name, 
+                    e.description,
+                    e.visuelName,
+                    e.isPublish,
+                    e.eventAt,
+                    e.eventtimeAt,
+                    e.placeAddress,
+                    e.placeComplement,
+                    e.placeZipcode,
+                    e.placeCity,
+                    e.isValidBy,
+                    e.urlFacebookEvent,
+                    e.urlInstagramEvent
+                    e.twoDay
+                FROM App\Entity\GestApp\Event e
+                WHERE e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt >= :current AND e.twoDay = :twoDay
+                ORDER BY e.eventAt ASC
+                "
+            )
+            ->setParameter('isPublish', 1)
+            ->setParameter('isValidBy', 1)
+            ->setParameter('twoDay', 0)
+            ->setParameter( 'current', $current)
+        ;
+        // Retourne le tableau associatif
         return $query->getResult();
     }
 

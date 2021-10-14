@@ -2,6 +2,7 @@
 
 namespace App\Controller\GestApp;
 
+use App\Entity\Admin\Member;
 use App\Entity\GestApp\Event;
 use App\Entity\GestApp\EventGal;
 use App\Form\GestApp\EventType;
@@ -215,5 +216,54 @@ class EventController extends AbstractController
         return $this->render('gest_app/event/history.html.twig', [
             'events' => $events,
         ]);
+    }
+
+    /**
+     * Permet de mettre en menu la poge ou non
+     * @Route("/admin/event/mailtwoday", name="op_gestapp_event_mailtwoday")
+     */
+    public function mailTwoDay(MailerInterface $mailer){
+        $date = new \DateTimeImmutable();
+        $current = $date->format('Y-m-d');
+        // Liste tous les évements qui doivent être envoyés à 2 jours
+        $events = $this->getDoctrine()->getRepository(Event::class)->listTwoDays($current);
+        foreach($events as $event){
+            $members = $this->getDoctrine()->getRepository(Member::class)->listMembersOnFront();
+            foreach($members as $member)
+            {
+            // partie de code pour envoyer un email aux membres du Just
+            $email = (new Email())
+                ->from('postmaster@openpixl.fr')
+                ->to('xavier.burke@openpixl.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('[JUSTàFaire] - A vos agendas')
+                //->text('Sending emails is fun again!')
+                ->html('
+                <h1>Just à Faire<small> - Prochainement</small></h1>
+                <p>Un nouvel évènement a été crée par : <br>Vous pouvez voir ce dernier dans votre espace.</p>
+                ');
+            $mailer->send($email);
+            }
+            // partie de code pour envoyer un email aux membres du Just
+            $email = (new Email())
+                ->from('postmaster@openpixl.fr')
+                ->to('xavier.burke@openpixl.fr')
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('JUSTàFaire - une nouvelle recommandation a été émise depuis le site')
+                //->text('Sending emails is fun again!')
+                ->html('
+                    <h1>Just à Faire<small> - Nouvel évenement créé</small></h1>
+                    <p>Un nouvel évèneent a été crée par : <br>Vous pouvez voir ce dernier dans votre espace.</p>
+                    ');
+            $mailer->send($email);
+
+            $event->setTwoDay(1);
+        }
     }
 }

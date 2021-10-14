@@ -159,6 +159,11 @@ class Event
      */
     private $eventtimeAt;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $twoDay = false;
+
     public function __construct()
     {
         $this->eventGals = new ArrayCollection();
@@ -514,6 +519,18 @@ class Event
     public function setEventtimeAt(\DateTimeInterface $eventtimeAt): self
     {
         $this->eventtimeAt = $eventtimeAt;
+
+        return $this;
+    }
+
+    public function getTwoDay(): ?bool
+    {
+        return $this->twoDay;
+    }
+
+    public function setTwoDay(?bool $twoDay): self
+    {
+        $this->twoDay = $twoDay;
 
         return $this;
     }
