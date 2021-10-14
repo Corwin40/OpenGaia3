@@ -1,0 +1,47 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Parrain</th>
+        <th>Invité</th>
+        <th>Société</th>
+        <th>Email de contact</th>
+        <th>Contacts</th>
+        <th>Présence</th>
+        <th>IsCotisation</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for parrainage in parrainages %}
+        <tr>
+            <td>{{ parrainage.author }}</td>
+            <td>{{ parrainage.ParrainageFirstname }} {{ parrainage.parrainageLastname }}</td>
+            <td>{{ parrainage.nameSociety }}</td>
+            <td>{{ parrainage.parrainageEmail }}</td>
+            <td>{{ parrainage.phoneDesk }} / {{ parrainage.phoneDesk }}</td>
+            <td>
+                {% if parrainage.firstMeeting %}
+                <span class="badge bg-light text-dark">{{ parrainage.firstMeeting|format_datetime('medium', 'none', locale='fr') }}</span>
+                {% else %}
+                <a href="{{ path('op_admin_parrainage_firstmeeting', {'id':parrainage.id})}}" class="btn btn-light btn-sm js-firstmeeting"><i class="bi bi-check2"></i></a>
+                {% endif %}
+
+                {% if parrainage.secondMeeting %}
+                <span class="badge bg-light text-dark">{{ parrainage.secondMeeting|format_datetime('medium', 'none', locale='fr') }}</span>
+                {% else %}
+                <a href="{{ path('op_admin_parrainage_secondmeeting', {'id':parrainage.id})}}" class="btn btn-light btn-sm js-secondmeeting"><i class="bi bi-check2-all"></i></a>
+                {% endif %}
+            </td>
+            <td>{{ parrainage.isCotisation ? 'Yes' : 'No' }}</td>
+            <td>
+                <a href="{{ path('op_admin_parrainage_index', {'id': parrainage.id}) }}">show</a>
+                <a href="{{ path('op_admin_parrainage_index', {'id': parrainage.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

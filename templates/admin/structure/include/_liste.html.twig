@@ -1,0 +1,49 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Structure</th>
+        <th>Gérant</th>
+        <th>Adressse</th>
+        <th>Site web</th>
+        <th>Email</th>
+        <th>Bureau</th>
+        <th>Mobile</th>
+        <th>Collaborateur</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for structure in structures %}
+        <tr>
+            <td>{{ structure.name }}</td>
+            <td>{{ structure.respFirstName }} {{ structure.respLastName }}</td>
+            <td>
+                {{ structure.address }}<br>
+                {{ structure.complement }}<br>
+                {{ structure.zipcode }} {{ structure.city }}
+            </td>
+            <td>{{ structure.urlWeb }}</td>
+            <td>{{ structure.EmailStruct }}</td>
+            <td>{{ structure.phoneDesk }}</td>
+            <td>{{ structure.phoneGsm }}</td>
+            <td>
+                {% if structure.collaborators|length > 0 %}
+                    {% for collaborator in structure.collaborators %}
+                        <a href="{{ path('op_admin_collaborator_edit', {'id': collaborator.id}) }}">{{ collaborator.firstname }} {{ collaborator.lastname }}</a>
+                    {% endfor %}
+                {% else %}
+                    <a href="#" id="btnAddCollaborator" data-bs-toggle="modal" data-bs-target="#AddCollaborator" data-bs-whatever="{{ structure.id }}">Ajouter</a>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{{ path('op_admin_structure_show', {'id': structure.id}) }}">show</a>
+                <a href="{{ path('op_admin_structure_edit2', {'id': structure.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="11">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

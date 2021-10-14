@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParrainageController extends AbstractController
 {
     /**
-     * @Route("/admin/parrainage", name="op_admin_parrainage_index", methods={"GET"})
+     * @Route("/opadmin/parrainage", name="op_admin_parrainage_index", methods={"GET"})
      */
     public function index(ParrainageRepository $parrainageRepository): Response
     {
@@ -25,7 +25,7 @@ class ParrainageController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/parrainage/add", name="op_admin_parrainage_add", methods={"POST"})
+     * @Route("/opadmin/parrainage/add", name="op_admin_parrainage_add", methods={"POST"})
      */
     public function add(Request $request, MailerInterface $mailer)
     {
@@ -78,7 +78,7 @@ class ParrainageController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="admin_parrainage_new", methods={"GET","POST"})
+     * @Route("/opadmin/parrainage//new", name="op_admin_parrainage_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -91,7 +91,7 @@ class ParrainageController extends AbstractController
             $entityManager->persist($parrainage);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_parrainage_index');
+            return $this->redirectToRoute('op_admin_parrainage_index');
         }
 
         return $this->render('admin/parrainage/new.html.twig', [
@@ -101,7 +101,7 @@ class ParrainageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_parrainage_show", methods={"GET"})
+     * @Route("/opadmin/parrainage//{id}", name="op_op_admin_parrainage_show", methods={"GET"})
      */
     public function show(Parrainage $parrainage): Response
     {
@@ -111,7 +111,7 @@ class ParrainageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_parrainage_edit", methods={"GET","POST"})
+     * @Route("/opadmin/parrainage//{id}/edit", name="op_admin_parrainage_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Parrainage $parrainage): Response
     {
@@ -121,7 +121,7 @@ class ParrainageController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_parrainage_index');
+            return $this->redirectToRoute('op_admin_parrainage_index');
         }
 
         return $this->render('admin/parrainage/edit.html.twig', [
@@ -131,7 +131,7 @@ class ParrainageController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_parrainage_delete", methods={"POST"})
+     * @Route("/opadmin/parrainage//{id}", name="op_admin_parrainage_delete", methods={"POST"})
      */
     public function delete(Request $request, Parrainage $parrainage): Response
     {
@@ -141,6 +141,44 @@ class ParrainageController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('admin_parrainage_index');
+        return $this->redirectToRoute('op_admin_parrainage_index');
+    }
+
+    /**
+     * @Route("/opadmin/parrainage/firstmeeting/{id}", name="op_admin_parrainage_firstmeeting", methods={"POST"})
+     */
+    public function firstMeeting(Request $request, MailerInterface $mailer, Parrainage $parrainage)
+    {
+        $parrainage->setFirstMeeting(New \DateTime());
+        $this->getDoctrine()->getManager()->flush();
+
+        $parrainages = $this->getDoctrine()->getRepository(Parrainage::class)->findAll();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Votre invité a été inscrit pour sa première participation.",
+            'liste' => $this->renderView('admin/parrainage/include/_liste.html.twig', [
+                'parrainages' => $parrainages,
+            ]),
+        ], 200);
+    }
+
+    /**
+     * @Route("/opadmin/parrainage/secondmeeting/{id}", name="op_admin_parrainage_secondmeeting", methods={"POST"})
+     */
+    public function secondMeeting(Request $request, MailerInterface $mailer, Parrainage $parrainage)
+    {
+        $parrainage->setSecondMeeting(New \DateTime());
+        $this->getDoctrine()->getManager()->flush();
+
+        $parrainages = $this->getDoctrine()->getRepository(Parrainage::class)->findAll();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Votre invité est inscrit pour sa seconde participation.",
+            'liste' => $this->renderView('admin/parrainage/include/_liste.html.twig', [
+                'parrainages' => $parrainages,
+            ]),
+        ], 200);
     }
 }

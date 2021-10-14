@@ -1,41 +1,89 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Parrainage index{% endblock %}
 
-{% block body %}
-    <h1>Parrainage index</h1>
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>ParrainageFirstname</th>
-                <th>ParrainageLastname</th>
-                <th>ParrainageEmail</th>
-                <th>IsCotisation</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for parrainage in parrainages %}
-            <tr>
-                <td>{{ parrainage.id }}</td>
-                <td>{{ parrainage.ParrainageFirstname }}</td>
-                <td>{{ parrainage.parrainageLastname }}</td>
-                <td>{{ parrainage.parrainageEmail }}</td>
-                <td>{{ parrainage.isCotisation ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('admin_parrainage_show', {'id': parrainage.id}) }}">show</a>
-                    <a href="{{ path('admin_parrainage_edit', {'id': parrainage.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            // Fonction d'appel du controller firstMeeting
+            function onClickFirstMeeting(event){
+                event.preventDefault();
+                const url = this.href;
+                axios
+                    .post(url)
+                    .then(function(response){
+                        // Rechargement de la liste
+                        const liste = document.getElementById('Liste').innerHTML = response.data.liste;
+                        // Ouverture du toast
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch()
+            }
 
-    <a href="{{ path('admin_parrainage_new') }}">Create new</a>
+            //fonction d'appel du controller secondMeeting
+            function onClickSecondMeeting(event){
+                event.preventDefault();
+                const url = this.href;
+                axios
+                    .post(url)
+                    .then(function(response){
+                        // Rechargement de la liste
+                        const liste = document.getElementById('Liste').innerHTML = response.data.liste;
+                        // Ouverture du toast
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch()
+            }
+
+            // Création de l'évènement sur le bouton js-firstmeeting
+            document.querySelectorAll('a.js-firstmeeting').forEach(function (link){
+                link.addEventListener('click', onClickFirstMeeting);
+            })
+
+            // Création de l'évènement sur le bouton js-firstmeeting
+            document.querySelectorAll('a.js-secondmeeting').forEach(function (link){
+                link.addEventListener('click', onClickSecondMeeting);
+            })
+        }
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <section class="op_admin_content_body">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="Liste">
+                            {{ include('admin/parrainage/include/_liste.html.twig') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

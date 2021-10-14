@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Collaborator index{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Collaborator index</h1>
 
     <table class="table">
@@ -35,8 +35,8 @@
                 <td>{{ collaborator.createdAt ? collaborator.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ collaborator.updatedAt ? collaborator.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('admin_collaborator_show', {'id': collaborator.id}) }}">show</a>
-                    <a href="{{ path('admin_collaborator_edit', {'id': collaborator.id}) }}">edit</a>
+                    <a href="{{ path('op_admin_collaborator_show', {'id': collaborator.id}) }}">show</a>
+                    <a href="{{ path('op_admin_collaborator_edit', {'id': collaborator.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -47,5 +47,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_collaborator_new') }}">Create new</a>
 {% endblock %}

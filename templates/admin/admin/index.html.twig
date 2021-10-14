@@ -155,53 +155,115 @@
     </div>
     <div class="row">
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
-            <div class="card border-primary">
+            <div class="card border-info bg-info">
                 <div class="card-body">
-                    <h5><span class="count-vignette">{{ members|length }}</span></h5>
-                    <p>Membres</p>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="avatar-lg rounded-circle bg-soft-light">
+                                <i class="bi bi-people-fill avatar-title"></i>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-end">
+                                <h2 class="text-white mt-2">{{ members|length }}</h2>
+                                <p class="text-white mb-0">Membres</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
-            <div class="card border-primary">
+            <div class="card border-info bg-info">
                 <div class="card-body">
-                    <h5>{{ recommandations|length }} Recommandations</h5>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="avatar-lg rounded-circle bg-soft-light">
+                                <i class="bi bi-bag-check-fill avatar-title"></i>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-end">
+                                <h2 class="text-white mt-2">{{ recommandations|length }}</h2>
+                                <p class="text-white mb-0">Recommandations</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl2">
-            <div class="card border-primary">
+            <div class="card border-info bg-info">
                 <div class="card-body">
-                    <h5>{{ events|length }} Evènements</h5>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
-            <div class="card border-primary">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div><h5>{{ annonces|length }} Annonces</h5></div>
-                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#AddAnnonce"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="avatar-lg rounded-circle bg-soft-light">
+                                <i class="bi bi-calendar-event avatar-title"></i>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-end">
+                                <h2 class="text-white mt-2">{{ events|length }}</h2>
+                                <p class="text-white mb-0">Evènements</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
-            <div class="card border-primary">
+            <div class="card border-primary bg-primary">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div><h5>{{ messages|length }} Messages</h5></div>
-                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#AddMessage"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="avatar-lg rounded-circle bg-soft-light">
+                                <a data-bs-toggle="modal" data-bs-target="#AddAnnonce"><i class="bi bi-chat-left-text avatar-title"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-end">
+                                <h2 class="text-white mt-2">{{ annonces|length }}</h2>
+                                <p class="text-white mb-0">Annonces</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
-            <div class="card border-primary">
+            <div class="card border-primary bg-primary">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div><h5>{{ invitations|length }} Invitation</h5></div>
-                        <div class="align-self-center"><a data-bs-toggle="modal" data-bs-target="#AddInvitation"><i class="bi bi-plus-circle" style="font-size: 1.5rem;"></i></a></div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="avatar-lg rounded-circle bg-soft-light">
+                                <a data-bs-toggle="modal" data-bs-target="#AddMessage"><i class="bi bi-envelope avatar-title"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-end">
+                                <h2 class="text-white mt-2">{{ messages|length }}</h2>
+                                <p class="text-white mb-0">Messages</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-2 col-xl-2">
+            <div class="card border-primary bg-primary">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="avatar-lg rounded-circle bg-soft-light">
+                                <a data-bs-toggle="modal" data-bs-target="#AddInvitation"><i class="bi bi bi-heart avatar-title"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="text-end">
+                                <h2 class="text-white mt-2">{{ invitations|length }}</h2>
+                                <p class="text-white mb-0">Invitation</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

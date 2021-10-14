@@ -57,6 +57,16 @@ class Parrainage
      */
     private $nameSociety;
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $firstMeeting;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $secondMeeting;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +164,30 @@ class Parrainage
     public function setNameSociety(string $nameSociety): self
     {
         $this->nameSociety = $nameSociety;
+
+        return $this;
+    }
+
+    public function getFirstMeeting(): ?\DateTimeInterface
+    {
+        return $this->firstMeeting;
+    }
+
+    public function setFirstMeeting(?\DateTimeInterface $firstMeeting): self
+    {
+        $this->firstMeeting = $firstMeeting;
+
+        return $this;
+    }
+
+    public function getSecondMeeting(): ?\DateTimeInterface
+    {
+        return $this->secondMeeting;
+    }
+
+    public function setSecondMeeting(?\DateTimeInterface $secondMeeting): self
+    {
+        $this->secondMeeting = $secondMeeting;
 
         return $this;
     }

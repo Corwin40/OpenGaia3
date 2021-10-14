@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin\Collaborator;
+use App\Entity\Admin\Structure;
 use App\Form\Admin\CollaboratorType;
 use App\Repository\Admin\CollaboratorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,13 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/admin/collaborator")
- */
 class CollaboratorController extends AbstractController
 {
     /**
-     * @Route("/", name="admin_collaborator_index", methods={"GET"})
+     * @Route("/opadmin/collaborator/", name="op_admin_collaborator_index", methods={"GET"})
      */
     public function index(CollaboratorRepository $collaboratorRepository): Response
     {
@@ -26,11 +24,13 @@ class CollaboratorController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="admin_collaborator_new", methods={"GET","POST"})
+     * @Route("/opadmin/collaborator/new/{idstructure}", name="op_admin_collaborator_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, $idstructure): Response
     {
+        $structure = $this->getDoctrine()->getRepository(Structure::class)->find($idstructure);
         $collaborator = new Collaborator();
+        $collaborator->setStructure($structure);
         $form = $this->createForm(CollaboratorType::class, $collaborator);
         $form->handleRequest($request);
 
@@ -39,17 +39,19 @@ class CollaboratorController extends AbstractController
             $entityManager->persist($collaborator);
             $entityManager->flush();
 
-            return $this->redirectToRoute('admin_collaborator_index');
+            return $this->redirectToRoute('op_admin_structure_index');
         }
 
         return $this->render('admin/collaborator/new.html.twig', [
             'collaborator' => $collaborator,
+            'idstructure' => $idstructure,
             'form' => $form->createView(),
         ]);
+
     }
 
     /**
-     * @Route("/{id}", name="admin_collaborator_show", methods={"GET"})
+     * @Route("/opadmin/collaborator/{id}", name="op_admin_collaborator_show", methods={"GET"})
      */
     public function show(Collaborator $collaborator): Response
     {
@@ -59,7 +61,7 @@ class CollaboratorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_collaborator_edit", methods={"GET","POST"})
+     * @Route("/opadmin/collaborator/{id}/edit", name="op_admin_collaborator_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Collaborator $collaborator): Response
     {
@@ -69,7 +71,7 @@ class CollaboratorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_collaborator_index');
+            return $this->redirectToRoute('op_admin_structure_index');
         }
 
         return $this->render('admin/collaborator/edit.html.twig', [
@@ -79,7 +81,7 @@ class CollaboratorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="admin_collaborator_delete", methods={"POST"})
+     * @Route("/opadmin/collaborator/{id}", name="op_admin_collaborator_delete", methods={"POST"})
      */
     public function delete(Request $request, Collaborator $collaborator): Response
     {

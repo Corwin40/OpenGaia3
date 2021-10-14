@@ -6,7 +6,6 @@ namespace App\Entity\Admin;
 use App\Repository\Admin\CollaboratorRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\Ignore;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -22,25 +21,21 @@ class Collaborator
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups({"user"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups({"user"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user"})
      */
     private $email;
 

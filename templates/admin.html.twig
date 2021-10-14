@@ -112,12 +112,12 @@
                 {# Modal pour ajouter un collaborateur depuis l'admin #}
                 <div class="modal fade" id="AddCollaborator" tabindex="-1" aria-labelledby="AddCollaborator" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl">
-                        < class="modal-content">
+                        <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Nouveau Collaborateur</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            {{ render(controller('App\\Controller\\Admin\\CollaboratorController::new', {'idStructure': structure})) }}
+                            {{ render(controller('App\\Controller\\Admin\\CollaboratorController::new', {'idstructure': 0})) }}
                         </div>
                     </div>
                 </div>
