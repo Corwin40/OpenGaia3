@@ -70,7 +70,7 @@ class MemberController extends AbstractController
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
                 //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - Inscription')
+                ->subject('JUST à Faire - Inscription')
                 //->text('Sending emails is fun again!')
                 ->html('
                     <h1>Just à Faire<small> - Nouvelle inscription</small></h1>
@@ -79,7 +79,6 @@ class MemberController extends AbstractController
                     <p>Vous devez activer ce membre pour qu\'il puisse se connecter et publier des recommandations , ...</p>
                     ');
             $mailer->send($email);
-
 
             return $this->redirectToRoute('op_admin_member_index');
         }
