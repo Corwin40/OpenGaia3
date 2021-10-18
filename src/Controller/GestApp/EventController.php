@@ -225,11 +225,12 @@ class EventController extends AbstractController
         $date = new \DateTimeImmutable();
         $current = $date->format('Y-m-d');
         // Liste tous les évements qui doivent être envoyés à 2 jours
-        $events = $this->getDoctrine()->getRepository(Event::class)->listTwoDays($current);
+        $events = $this->getDoctrine()->getRepository(Event::class)->ListTwoDay($current);
         foreach($events as $event){
             $members = $this->getDoctrine()->getRepository(Member::class)->listMembersOnFront();
             foreach($members as $member)
             {
+            // Adresse de chaque membre
             // partie de code pour envoyer un email aux membres du Just
             $email = (new Email())
                 ->from('postmaster@openpixl.fr')
@@ -246,21 +247,7 @@ class EventController extends AbstractController
                 ');
             $mailer->send($email);
             }
-            // partie de code pour envoyer un email aux membres du Just
-            $email = (new Email())
-                ->from('postmaster@openpixl.fr')
-                ->to('xavier.burke@openpixl.fr')
-                //->cc('cc@example.com')
-                //->bcc('bcc@example.com')
-                //->replyTo('fabien@example.com')
-                //->priority(Email::PRIORITY_HIGH)
-                ->subject('JUSTàFaire - une nouvelle recommandation a été émise depuis le site')
-                //->text('Sending emails is fun again!')
-                ->html('
-                    <h1>Just à Faire<small> - Nouvel évenement créé</small></h1>
-                    <p>Un nouvel évèneent a été crée par : <br>Vous pouvez voir ce dernier dans votre espace.</p>
-                    ');
-            $mailer->send($email);
+
 
             $event->setTwoDay(1);
         }

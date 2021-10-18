@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Admin\Parameter;
 use App\Entity\Admin\Parrainage;
 use App\Form\Admin\ParrainageType;
 use App\Repository\Admin\ParrainageRepository;
@@ -47,10 +48,13 @@ class ParrainageController extends AbstractController
         $entityManager->persist($parrainage);
         $entityManager->flush();
 
+        $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+        $webmaster = $parameter->getAdminEmail();
+
         // Envoyer un email au Just
         $email = (new TemplatedEmail())
             ->from('postmaster@openpixl.fr')
-            ->to('xavier.burke@openpixl.fr')
+            ->to($webmaster)
             //->cc('cc@example.com')
             //->bcc('bcc@example.com')
             //->replyTo('fabien@example.com')

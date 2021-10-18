@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Admin\Member;
+use App\Entity\Admin\Parameter;
 use App\Form\Admin\Member2Type;
 use App\Form\Admin\MemberType;
 use App\Repository\Admin\MemberRepository;
@@ -47,6 +48,7 @@ class MemberController extends AbstractController
      */
     public function new(Request $request,UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
     {
+
         $member = new Member();
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
@@ -62,10 +64,13 @@ class MemberController extends AbstractController
             $entityManager->persist($member);
             $entityManager->flush();
 
-            // partie de code pour envoyer un email au membre recommandé
+            $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+            $webmaster = $parameter->getAdminEmail();
+
+            // partie de code pour envoyer un email à l'administrateur
             $email = (new Email())
                 ->from('postmaster@openpixl.fr')
-                ->to('xavier.burke@openpixl.fr')
+                ->to($webmaster)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')

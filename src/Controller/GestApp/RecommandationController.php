@@ -132,10 +132,13 @@ class RecommandationController extends AbstractController
                 ]);
             $mailer->send($email);
 
+            $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+            $webmaster = $parameter->getAdminEmail();
+
             // Envoi du mail de nouvelle recomandation pour JUST
             $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
-                ->to('contact@justafaire.fr')
+                ->to($webmaster)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
@@ -168,6 +171,7 @@ class RecommandationController extends AbstractController
         // récupération de l'adresse de la structure
         $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
         //author
+        $user = $this->getUser();
 
         $recommandation = new Recommandation();
         $form = $this->createForm(RecommandationType::class, $recommandation);
@@ -230,10 +234,12 @@ class RecommandationController extends AbstractController
                 ]);
             $mailer->send($email);
 
+            $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+            $webmaster = $parameter->getAdminEmail();
             // Envoi du mail de nouvelle recomandation pour JUST
             $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
-                ->to('contact@justafaire.fr')
+                ->to($webmaster)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')

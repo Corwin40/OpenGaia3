@@ -3,6 +3,7 @@
 namespace App\Controller\GestApp;
 
 use App\Entity\Admin\Member;
+use App\Entity\Admin\Parameter;
 use App\Entity\Admin\Structure;
 use App\Entity\GestApp\Adhesion;
 use App\Form\GestApp\AdhesionType;
@@ -68,6 +69,9 @@ class AdhesionController extends AbstractController
             $entityManager->persist($adhesion);
             $entityManager->flush();
 
+            $parameter = $this->getDoctrine()->getRepository(Parameter::class)->find(1);
+            $webmaster = $parameter->getAdminEmail();
+
             // partie de code pour envoyer un email au membre recommandé
             $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
@@ -84,7 +88,7 @@ class AdhesionController extends AbstractController
             // partie de code pour envoyer un email à Just
             $email = (new TemplatedEmail())
                 ->from('postmaster@openpixl.fr')
-                ->to('contact@justafaire.fr')
+                ->to($webmaster)
                 //->cc('cc@example.com')
                 //->bcc('bcc@example.com')
                 //->replyTo('fabien@example.com')
