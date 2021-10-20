@@ -54,6 +54,18 @@ class RecommandationController extends AbstractController
     }
 
     /**
+     * @Route("/op_admin/gestapp/recommandationAdmin/", name="op_gestapp_recommandation_indexadmin", methods={"GET"})
+     */
+    public function indexAdmin(RecommandationRepository $recommandationRepository): Response
+    {
+        $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
+        return $this->render('gest_app/recommandation/index2.html.twig', [
+            'recommandations' => $recommandations,
+        ]);
+    }
+
+
+    /**
      * @Route("/op_admin/gestapp/recommandation/reload", name="op_gestapp_recommandation_indexreload", methods={"GET"})
      */
     public function indexReload(RecommandationRepository $recommandationRepository): Response

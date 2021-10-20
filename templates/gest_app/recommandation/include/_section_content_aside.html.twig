@@ -3,6 +3,13 @@
         <h4><a href="{{ path('op_gestapp_recommandation_new') }}"><i class="far fa-plus-square"></i> Nouvelle reco</a></h4>
     </div>
 </div>
+{% if is_granted('ROLE_ADMIN') %}
+<div class="card">
+    <div class="card-body">
+        <h4><a href="{{ path('op_gestapp_recommandation_indexadmin') }}"><i class="fas fa-list"></i> Toutes les recommandations</a></h4>
+    </div>
+</div>
+{% endif %}
 <div class="card">
     <div class="card-body">
         <h4>
