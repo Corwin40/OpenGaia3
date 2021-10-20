@@ -90,6 +90,7 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
                 m.email AS adherent_email,
                 m.phoneDesk AS adherent_desk,
                 m.phoneGsm AS adherent_gsm,
+                s.id as idstructure,
                 s.name as structure,
                 s.respFirstName AS respFirstName,
                 s.respLastName AS respLastName,

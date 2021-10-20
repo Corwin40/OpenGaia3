@@ -61,6 +61,18 @@ class CollaboratorController extends AbstractController
     }
 
     /**
+     * @Route("/opadmin/collaborator/{idstructure}", name="op_admin_collaborator_structure", methods={"GET"})
+     */
+    public function collaborator($idstructure): Response
+    {
+        $structure = $this->getDoctrine()->getRepository(Structure::class)->find($idstructure);
+        $collaborators = $this->getDoctrine()->getRepository(Collaborator::class)->findBy(array('structure'=>$structure));
+        return $this->render('admin/collaborator/collaborator.html.twig', [
+            'collaborators' => $collaborators,
+        ]);
+    }
+
+    /**
      * @Route("/opadmin/collaborator/{id}/edit", name="op_admin_collaborator_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Collaborator $collaborator): Response

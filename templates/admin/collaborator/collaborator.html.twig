@@ -1,0 +1,33 @@
+{% if collaborators is not null %}
+    {% for collaborator in collaborators %}
+    <h3 class="text-start">Son collaborateur :</h3>
+        <div class="row">
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
+                <p class="text-center">
+                    {% if collaborator.avatarName is null %}
+                        <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="max-height: 240px;max-width: 240px;">
+                    {% elseif collaborator.avatarName is not null %}
+                        <img class="card-img-top img-fluid img-rounded" src="{{ vich_uploader_asset(collaborator, 'avatarFile', 'App\\Entity\\Admin\\Collaborator') | imagine_filter('avatar_image') }}" alt="{{ collaborator.avatarName }}" style="max-height: 240px;max-width: 240px;">
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <p class="text-start">
+                {{ collaborator.firstName }}  {{ collaborator.lastName }}<br>
+                <a href="mailto:{{ collaborator.email }}"><i class="fas fa-envelope-open-text"></i> {{ collaborator.email }}</a><br>
+                {% if collaborator.phoneDesk is null and collaborator.phoneGsm is null %}
+                {% elseif collaborator.phoneDesk is null and collaborator.phoneGsm is not null %}
+                    <i class="fas fa-mobile-alt"></i> : {{ collaborator.phoneGsm}}
+                {% elseif collaborator.phoneDesk is not null and collaborator.phoneGsm is null %}
+                    <i class="fas fa-phone-square-alt"></i> : {{ collaborator.phoneDesk }}
+                {% else %}
+                    <i class="fas fa-phone-square-alt"></i> : {{ collaborator.phoneDesk }} / <i class="fas fa-mobile-alt"></i> : {{ collaborator.phoneGsm }}
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+

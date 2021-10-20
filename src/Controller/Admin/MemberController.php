@@ -215,6 +215,7 @@ class MemberController extends AbstractController
     public function Del(Request $request, Member $member) : Response
     {
         $Structure = $member->getStructure();
+        $members = $this->getDoctrine()->getRepository(Member::class)->findAll();
 
         if(!$Structure){
             $entityManager = $this->getDoctrine()->getManager();
@@ -223,7 +224,10 @@ class MemberController extends AbstractController
 
             return $this->json([
                 'code'=> 200,
-                'message' => "Le membre a été supprimé"
+                'message' => "Le membre a été supprimé",
+                'liste' => $this->renderView('admin/member/include/_liste.html.twig', [
+                    'members' => $members,
+                ])
             ], 200);
         }else{
             $entityManager = $this->getDoctrine()->getManager();
@@ -233,7 +237,10 @@ class MemberController extends AbstractController
 
             return $this->json([
                 'code'=> 200,
-                'message' => "Le membre et sa structure ont été supprimé"
+                'message' => "Le membre et sa structure ont été supprimé",
+                'liste' => $this->renderView('admin/member/include/_liste.html.twig', [
+                    'members' => $members,
+                ])
             ], 200);
         }
     }
