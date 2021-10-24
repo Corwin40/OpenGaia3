@@ -6,7 +6,6 @@
     {{ parent() }}
     <script>
         window.onload = function(){
-
             // Lancement de la modal de suppression d'une adhésion
             var Suppr = document.getElementById('Suppr')
             Suppr.addEventListener('show.bs.modal', function (event) {
@@ -69,61 +68,61 @@
     {{ include('gest_app/adhesion/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
-            <div class="col-2">
+            <div class="col-md-2 col-lg-2 col-xl-2 col-xxl-2">
                 {{ include('gest_app/adhesion/include/_section_content_aside.html.twig') }}
             </div>
-            <div class="col-10">
+            <div class="col-md-10 col-lg-10 col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-body">
                         <h4>Liste des demandes d'adhésions</h4>
                         <p>Créer, Modifier ou supprimer des adhésions</p>
-                        <div class="row">
-                            <div class="col-12">
+                        <div id="liste">
+                            <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nom & prénom</th>
-                                        <th>Société</th>
-                                        <th>Email</th>
-                                        <th>Siret</th>
-                                        <th>Gerant</th>
-                                        <th>UrlWeb</th>
-                                        <th>UrlFacebook</th>
-                                        <th>UrlInstagram</th>
-                                        <th>UrlLinkedin</th>
-                                        <th>Envoyé le</th>
-                                        <th>actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for adhesion in adhesions %}
-                                        <tr class="align-middle">
-                                            <td><input type="checkbox"></td>
-                                            <td><a href="{{ path('op_gestapp_adhesion_show', {'id':adhesion.id}) }}"><b>{{ adhesion.firstName }} {{ adhesion.lastName }}</b></a></td>
-                                            <td>{{ adhesion.society }}</td>
-                                            <td>{{ adhesion.email }}</td>
-                                            <td>{{ adhesion.siret }}</td>
-                                            <td>{{ adhesion.gerantFirstname }} {{ adhesion.gerantLastName }}</td>
-                                            <td>{{ adhesion.urlWeb }}</td>
-                                            <td>{{ adhesion.urlFacebook }}</td>
-                                            <td>{{ adhesion.urlInstagram }}</td>
-                                            <td>{{ adhesion.urlLinkedin }}</td>
-                                            <td>{{ adhesion.createdAt ? adhesion.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                            <td>
-                                                <a href="{{ path('op_gestapp_adhesion_show', {'id': adhesion.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
-                                                <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ adhesion.id }}">
-                                                    <i class="fas fa-eraser"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    {% else %}
+                                        <thead>
                                         <tr>
-                                            <td colspan="11">no records found</td>
+                                            <th></th>
+                                            <th>Nom & prénom</th>
+                                            <th>Société</th>
+                                            <th>Email</th>
+                                            <th class="d-none d-lg-block">Siret</th>
+                                            <th class="d-none d-lg-block">Gerant</th>
+                                            <th class="d-none d-lg-block">UrlWeb</th>
+                                            <th class="d-none d-lg-block">UrlFacebook</th>
+                                            <th class="d-none d-lg-block">UrlInstagram</th>
+                                            <th class="d-none d-lg-block">UrlLinkedin</th>
+                                            <th class="d-none d-lg-block">Envoyé le</th>
+                                            <th>actions</th>
                                         </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        {% for adhesion in adhesions %}
+                                            <tr class="align-middle">
+                                                <td><input type="checkbox"></td>
+                                                <td><a href="{{ path('op_gestapp_adhesion_show', {'id':adhesion.id}) }}"><b>{{ adhesion.firstName }} {{ adhesion.lastName }}</b></a></td>
+                                                <td>{{ adhesion.society }}</td>
+                                                <td>{{ adhesion.email }}</td>
+                                                <td class="d-none d-lg-block">{{ adhesion.siret }}</td>
+                                                <td class="d-none d-lg-block">{{ adhesion.gerantFirstname }} {{ adhesion.gerantLastName }}</td>
+                                                <td class="d-none d-lg-block">{{ adhesion.urlWeb }}</td>
+                                                <td class="d-none d-lg-block">{{ adhesion.urlFacebook }}</td>
+                                                <td class="d-none d-lg-block">{{ adhesion.urlInstagram }}</td>
+                                                <td class="d-none d-lg-block">{{ adhesion.urlLinkedin }}</td>
+                                                <td class="d-none d-lg-block">{{ adhesion.createdAt ? adhesion.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                                <td>
+                                                    <a href="{{ path('op_gestapp_adhesion_show', {'id': adhesion.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
+                                                    <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ adhesion.id }}">
+                                                        <i class="fas fa-eraser"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr>
+                                                <td colspan="11">no records found</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
                             </div>
                         </div>
                     </div>

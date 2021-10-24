@@ -3,8 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}name of site | login{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
         {% block stylesheets %}
             {{ encore_entry_link_tags('login') }}
+        {% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('login') }}
         {% endblock %}
     </head>
     <body class="d-flex align-items-center bg-auth" style="display: block;">
@@ -15,7 +19,5 @@
             </main>
         </div>
     </body>
-    {% block javascripts %}
-        {{ encore_entry_script_tags('login') }}
-    {% endblock %}
+
 </html>

@@ -10,7 +10,7 @@
             {% if hide == 0 %}<th>Description</th>{% endif %}
             <th>Client</th>
             <th>Contacts</th>
-            <th>Estimation</th>
+            <th class="d-none d-lg-block">Estimation</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -46,7 +46,7 @@
                     {{ recommandation.ClientEmail }} / {{ recommandation.ClientDesk }} / {{ recommandation.clientGsm }}
                 {% endif %}
             </td>
-            <td>
+            <td class="d-none d-lg-block">
                 {% if recommandation.recoPrice is null %}Non déterminé{% else %}{{ recommandation.recoPrice }}€{% endif %}</td>
             <td>
                 <a href="{{ path('op_gestapp_recommandation_show', {'id': recommandation.id}) }}"><i class="far fa-eye"></i></a>

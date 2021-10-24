@@ -208,6 +208,8 @@ label {
   background-image: url("../images/png/shadow_event.png");
 }
 
+
+
 .modal-body {
   position: relative;
   flex: 1 1 auto;
@@ -287,6 +289,28 @@ footer h4, h5,{
 
 #jaf-footer-bottom a:hover, #jaf-footer-bottom a:active{
   color: $jaf-color-first;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (max-width: 576px) {
+  #SlideEvent .carousel-caption {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0%;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(34,34,34,0.6);
+    opacity: 1;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+
 }
 
 @media (max-width: 767.98px) {

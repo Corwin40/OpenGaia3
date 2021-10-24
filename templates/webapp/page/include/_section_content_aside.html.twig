@@ -11,7 +11,7 @@
 <div class="card">
     <div class="card-body">
         {% if app.request.get('_route') == 'op_webapp_page_index'%}
-        <h4><a href="{{ path('op_webapp_page_newposition', {'position': lastposition}) }}"><i class="far fa-plus-square"></i> Nouvelle page</a></h4>
+        <h4 class="d-flex flex-row"><a href="{{ path('op_webapp_page_newposition', {'position': lastposition}) }}"><i class="fas fa-plus-circle"></i> Nouvelle page</a></h4>
         {% elseif app.request.get('_route') == 'op_webapp_page_new' or app.request.get('_route') == 'op_webapp_page_newposition' %}
         <h4 class="text-muted"><i class="far fa-plus-square text-muted"></i> Nouvelle page</h4>
         {% else %}
@@ -21,17 +21,17 @@
 </div>
 <div class="card">
     <div class="card-body">
-        <h3>
+        <h4>
             <a href="{{ path('op_webapp_section_homepagefavourites') }}"><i class="fas fa-home"></i> Page d'accueil</a>
-        </h3>
+        </h4>
     </div>
 </div>
 <div class="card">
     <div class="card-body">
-        <h3>{% if app.request.get('_route') == 'op_webapp_page_index'%}
+        <h4>{% if app.request.get('_route') == 'op_webapp_page_index'%}
         <a href="{{ path('op_admin_dashboard_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
         {% else %}
         <a href="{{ path('op_webapp_page_index') }}"><i class="fas fa-chevron-circle-left"></i> Retour</a>
-        {% endif %}</h3>
+        {% endif %}</h4>
     </div>
 </div>

@@ -30,3 +30,10 @@ $admin-color : linear-gradient(90deg, rgba(28,113,216,1) 0%, rgba(48,200,119,1) 
 #navbar_admin a {
   color : darken(#428bca, 20%);
 }
+
+.navbar-light .navbar-toggler {
+  color: rgba(0, 0, 0, 0.55);
+  border-color: rgba(0, 0, 0, 0.1);
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+}
