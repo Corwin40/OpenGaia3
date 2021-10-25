@@ -37,7 +37,7 @@
                                     <td>{{ annonce.createdAt ? annonce.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     <td>{{ annonce.updatedAt ? annonce.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     <td>
-                                        <a href="{{ path('op_admin_annonce_show', {'id': annonce.id}) }}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
+                                        <a href="{{ path('op_admin_annonce_edit', {'id': annonce.id}) }}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
                                         <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ annonce.id }}">
                                             <i class="fas fa-eraser"></i>
                                         </a>

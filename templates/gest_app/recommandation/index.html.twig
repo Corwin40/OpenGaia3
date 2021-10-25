@@ -76,10 +76,10 @@
         {{ include('gest_app/recommandation/include/_section_content_header.html.twig') }}
         <section id="op_admin_content_body">
             <div class="row g-2">
-                <div class="col-2">
+                <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
                     {{ include('gest_app/recommandation/include/_section_content_aside.html.twig') }}
                 </div>
-                <div class="col-10">
+                <div class="col-md-12 col-lg-10 col-xl-10 col-xxl-10">
                     <div class="card">
                         <div class="card-body">
                             <h4>Catalogue des recommandations</h4>
@@ -124,7 +124,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_recommandation_index') }}">Retour à la liste des recommandations</a>
+                            <a class="btn btn-sm btn-secondary" href="{{ path('op_gestapp_recommandation_index') }}">Retour</a>
                             <a class="btn btn-sm btn-primary" href="{{ path('op_gestapp_recommandation_new') }}">Ajouter une recommandation</a>
                         </div>
                     </div>

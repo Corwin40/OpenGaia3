@@ -230,14 +230,14 @@
     {{ include('webapp/page/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
-            <div class="col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+            <div class="col-md-12 col-lg-2 col-xl-2 col-xxl-2">
             {% if not pages%}
                 {% include 'webapp/page/include/_section_content_aside.html.twig' %}
             {% else %}
                 {% include 'webapp/page/include/_section_content_aside.html.twig' with pages %}
             {% endif %}
             </div>
-            <div class="col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+            <div class="col-md-12 col-lg-10 col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
