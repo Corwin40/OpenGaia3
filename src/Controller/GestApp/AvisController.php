@@ -10,9 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("")
- */
 class AvisController extends AbstractController
 {
     /**
@@ -101,5 +98,27 @@ class AvisController extends AbstractController
         return $this->render('gest_app/avis/view.html.twig', [
             'avis' => $avisRepository->findAll(),
         ]);
+    }
+
+    /**
+     * Suppression d'une ligne index.php
+     * @Route("/op_admin/gestapp/avis/del/{id}", name="op_gestapp_avis_suppr", methods={"POST"})
+     */
+    public function DelEvent(Request $request, Avis $avis) : Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($avis);
+        $entityManager->flush();
+
+        $liste = $this->getDoctrine()->getRepository(Avis::class)->findAll();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "L'évènenemt a été supprimé",
+            'liste' => $this->renderView('gest_app/avis/include/_liste.html.twig', [
+                'avis' => $liste
+            ]),
+        ], 200);
     }
 }

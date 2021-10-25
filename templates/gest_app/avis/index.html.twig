@@ -2,6 +2,67 @@
 
 {% block title %}Avis index{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+
+            // Lancement de la modal de suppression d'une adhésion
+            var Suppr = document.getElementById('Suppr')
+            Suppr.addEventListener('show.bs.modal', function (event) {
+                // Button that triggered the modal
+                var a = event.relatedTarget
+                // Extract info from data-bs-* attributes
+                var recipient = a.getAttribute('data-bs-whatever')
+                // If necessary, you could initiate an AJAX request here
+                // and then do the updating in a callback.
+                //
+                // Update the modal's content.
+                var modalTitle = Suppr.querySelector('.modal-title')
+                var modalText = Suppr.querySelector('.modal-text')
+                var modalBodyInput = Suppr.querySelector('.modal-body input')
+
+                modalTitle.textContent = "Suppression d'un évènement"
+                modalBodyInput.value = recipient
+                modalText.innerHTML = "Vous êtes sur le point de supprimer l'avis'.<br><b>Etes-vous bien sur de vouloir continuer ?</b>"
+            })
+
+            // function Suppression de la ligne en cours
+            function onClickDelEvent(event){
+                //event.preventDefault()
+                const id = document.getElementById('recipient-name').value;
+                axios
+                    .post('/op_admin/gestapp/avis/del/'+ id)
+                    .then(function(response)
+                    {
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste;
+
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch(function(error){
+                        console.log(error);
+                    })
+            }
+
+            // Ajout d''un Event sur la class Js-Data-Suppr
+            document.querySelectorAll('a.js-data-suppr').forEach(function(link){
+                link.addEventListener('click', onClickDelEvent)
+            })
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     {{ include('gest_app/avis/include/_section_content_header.html.twig') }}
@@ -15,37 +76,9 @@
                     <div class="card-body">
                         <h4>Liste des avis</h4>
                         <p>Créer, Modifier ou supprimer des avis</p>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Description</th>
-                                    <th>Author</th>
-                                    <th>CreatedAt</th>
-                                    <th>UpdatedAt</th>
-                                    <th>actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for avi in avis %}
-                                <tr>
-                                    <td>{{ avi.id }}</td>
-                                    <td>{{ avi.description|raw }}</td>
-                                    <td>{{ avi.author }}</td>
-                                    <td>{{ avi.createdAt ? avi.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                                    <td>{{ avi.updatedAt ? avi.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                                    <td>
-                                        <a href="{{ path('op_gestapp_avis_show', {'id': avi.id}) }}">show</a>
-                                        <a href="{{ path('op_gestapp_avis_edit', {'id': avi.id}) }}">edit</a>
-                                    </td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="6">no records found</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                        <div id="liste">
+                        {% include 'gest_app/avis/include/_liste.html.twig' %}
+                        </div>
                     </div>
                     <div class="card-footer">
                         <a class="btn btn-sm btn-primary" href="{{ path('op_gestapp_avis_new') }}">Ajouter un avis</a>
