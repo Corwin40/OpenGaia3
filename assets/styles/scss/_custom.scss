@@ -310,7 +310,19 @@ footer h4, h5,{
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-
+  #SlideEvent .carousel-caption {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: 0%;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(34,34,34,0.6);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 767.98px) {
