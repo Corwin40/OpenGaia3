@@ -21,36 +21,31 @@ class EventRepository extends ServiceEntityRepository
 
     public function ListAllEventPublish($current)
     {
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager
-            ->createQuery(
-                "
-                SELECT 
-                    e.id, 
-                    e.name, 
-                    e.description,
-                    e.visuelName,
-                    e.isPublish,
-                    e.eventAt,
-                    e.eventtimeAt,
-                    e.placeAddress,
-                    e.placeComplement,
-                    e.placeZipcode,
-                    e.placeCity,
-                    e.isValidBy,
-                    e.urlFacebookEvent,
-                    e.urlInstagramEvent
-                FROM App\Entity\GestApp\Event e
-                WHERE e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt >= :current
-                ORDER BY e.eventAt ASC
-                "
-            )
+        return $this->createQueryBuilder('e')
+            ->addSelect('
+                e.id, 
+                e.name, 
+                e.description,
+                e.visuelName,
+                e.isPublish,
+                e.eventAt,
+                e.eventtimeAt,
+                e.placeAddress,
+                e.placeComplement,
+                e.placeZipcode,
+                e.placeCity,
+                e.isValidBy,
+                e.urlFacebookEvent,
+                e.urlInstagramEvent
+                 ')
+            ->andWhere('e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt > :current')
             ->setParameter('isPublish', 1)
             ->setParameter('isValidBy', 1)
             ->setParameter( 'current', $current)
-        ;
-        // Retourne le tableau associatif
-        return $query->getResult();
+            ->orderBy('e.eventAt', 'desc')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
     public function ListTwoDay($current)
@@ -97,6 +92,7 @@ class EventRepository extends ServiceEntityRepository
     public function ListAllEventPublishHistory($current)
     {
         return $this->createQueryBuilder('e')
+            ->leftJoin('e.author', 'm')
             ->addSelect('
                 e.id, 
                 e.name, 
@@ -111,12 +107,15 @@ class EventRepository extends ServiceEntityRepository
                 e.placeCity,
                 e.isValidBy,
                 e.urlFacebookEvent,
-                e.urlInstagramEvent
+                e.urlInstagramEvent,
+                m.id
                  ')
             ->andWhere('e.isPublish = :isPublish AND e.isValidBy = :isValidBy AND e.eventAt < :current')
+            ->andWhere('m.id = :author')
             ->setParameter('isPublish', 1)
             ->setParameter('isValidBy', 1)
             ->setParameter( 'current', $current)
+            ->setParameter('author', 23)
             ->orderBy('e.eventAt', 'desc')
             ->getQuery()
             ->getResult()

@@ -2,12 +2,12 @@
     <table class="table align-middle">
         <thead>
         <tr>
-            <th></th>
-            <th>Id</th>
+            <th class="d-none d-sm-table-cell"></th>
             <th>Titre</th>
-            <th>Description</th>
-            <th>Catégorie</th>
-            <th>Créer le</th>
+            <th>Auteur</th>
+            <th class="d-none d-sm-table-cell">Description</th>
+            <th class="d-none d-sm-table-cell">Catégorie</th>
+            <th class="d-none d-sm-table-cell">Créer le</th>
             <th>Modifier le</th>
             <th>Actions</th>
         </tr>
@@ -15,12 +15,12 @@
         <tbody>
         {% for article in articles %}
             <tr>
-                <td><input type="checkbox"></td>
-                <td><strong><a href="{{ path('op_webapp_article_edit', {'id': article.id}) }}">{{ article.title }}</a></strong><br><small>{{ article.slug }}</small></td>
+                <td class="d-none d-sm-table-cell"><input type="checkbox"></td>
+                <td><strong><a href="{{ path('op_webapp_article_edit', {'id': article.id}) }}">{{ article.title }}</a></strong></td>
                 <td>{{ article.author}}</td>
-                <td>{{ article.description }}</td>
-                <td>{{ article.category }}</td>
-                <td>{{ article.createdAt ? article.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                <td class="d-none d-sm-table-cell">{{ article.description }}</td>
+                <td class="d-none d-sm-table-cell">{{ article.category }}</td>
+                <td class="d-none d-sm-table-cell">{{ article.createdAt ? article.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                 <td>{{ article.updatedAt ? article.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                 <td>
                     <a href="{{ path('op_webapp_article_show', {'id': article.id}) }}"><i class="far fa-eye"></i></a>

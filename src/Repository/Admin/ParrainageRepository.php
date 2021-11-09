@@ -19,6 +19,25 @@ class ParrainageRepository extends ServiceEntityRepository
         parent::__construct($registry, Parrainage::class);
     }
 
+     /**
+     * @return Parrainage[] Returns an array of Parrainage objects
+     */
+    public function Parrainnage($iduser)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.author = :author')
+            ->andWhere('p.firstMeeting IS NOT NULL')
+            ->andWhere('p.secondMeeting IS NOT NULL')
+            ->andWhere('p.isCotisation = :isCotisation')
+            ->setParameter('author', $iduser)
+            ->setParameter('isCotisation', 1)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Parrainage[] Returns an array of Parrainage objects
     //  */

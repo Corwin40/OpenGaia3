@@ -85,13 +85,12 @@
                                             <th>Nom & prénom</th>
                                             <th>Société</th>
                                             <th>Email</th>
-                                            <th class="d-none d-lg-block">Siret</th>
-                                            <th class="d-none d-lg-block">Gerant</th>
-                                            <th class="d-none d-lg-block">UrlWeb</th>
-                                            <th class="d-none d-lg-block">UrlFacebook</th>
-                                            <th class="d-none d-lg-block">UrlInstagram</th>
-                                            <th class="d-none d-lg-block">UrlLinkedin</th>
-                                            <th class="d-none d-lg-block">Envoyé le</th>
+                                            <th>Siret</th>
+                                            <th>Gerant</th>
+                                            <th>UrlWeb</th>
+                                            <th>UrlFacebook</th>
+                                            <th>UrlInstagram</th>
+                                            <th>UrlLinkedin</th>
                                             <th>actions</th>
                                         </tr>
                                         </thead>
@@ -102,13 +101,12 @@
                                                 <td><a href="{{ path('op_gestapp_adhesion_show', {'id':adhesion.id}) }}"><b>{{ adhesion.firstName }} {{ adhesion.lastName }}</b></a></td>
                                                 <td>{{ adhesion.society }}</td>
                                                 <td>{{ adhesion.email }}</td>
-                                                <td class="d-none d-lg-block">{{ adhesion.siret }}</td>
-                                                <td class="d-none d-lg-block">{{ adhesion.gerantFirstname }} {{ adhesion.gerantLastName }}</td>
-                                                <td class="d-none d-lg-block">{{ adhesion.urlWeb }}</td>
-                                                <td class="d-none d-lg-block">{{ adhesion.urlFacebook }}</td>
-                                                <td class="d-none d-lg-block">{{ adhesion.urlInstagram }}</td>
-                                                <td class="d-none d-lg-block">{{ adhesion.urlLinkedin }}</td>
-                                                <td class="d-none d-lg-block">{{ adhesion.createdAt ? adhesion.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                                <td>{{ adhesion.siret }}</td>
+                                                <td>{{ adhesion.gerantFirstname }} {{ adhesion.gerantLastName }}</td>
+                                                <td>{{ adhesion.urlWeb }}</td>
+                                                <td>{{ adhesion.urlFacebook }}</td>
+                                                <td>{{ adhesion.urlInstagram }}</td>
+                                                <td>{{ adhesion.urlLinkedin }}</td>
                                                 <td>
                                                     <a href="{{ path('op_gestapp_adhesion_show', {'id': adhesion.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
                                                     <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ adhesion.id }}">

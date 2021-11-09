@@ -95,34 +95,25 @@
                             {# Description du membre #}
                             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                 <h3 class="text-start">L'adhérent au Just à Faire :</h3>
-                                <div class="row">
-                                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-4 col-xl-4">
-                                        <p class="text-center">
-                                            {% if member.avatarName is null %}
-                                                <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="max-height: 240px;max-width: 240px;">
-                                            {% elseif member.avatarName is not null %}
-                                                <img class="card-img-top img-fluid img-rounded" src="{{ vich_uploader_asset(member, 'avatarFile', 'App\\Entity\\Admin\\Member') | imagine_filter('avatar_image') }}" alt="{{ member.logoStructureName }}" style="max-height: 240px;max-width: 240px;">
-                                            {% endif %}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row justify-content-center">
-                                    <div class="col-12">
-                                        <p class="text-start">
-                                            {{ member.firstName }}  {{ member.lastName }}<br>
-                                            <a href="mailto:{{ member.adherent_email }}"><i class="fas fa-envelope-open-text"></i> {{ member.adherent_email }}</a><br>
-                                            {% if member.adherent_desk is null and member.adherent_gsm is null %}
-                                            {% elseif member.adherent_desk is null and member.adherent_gsm is not null %}
-                                                <i class="fas fa-mobile-alt"></i> : {{ member.adherent_gsm }}
-                                            {% elseif member.adherent_desk is not null and member.adherent_gsm is null %}
-                                                <i class="fas fa-phone-square-alt"></i> : {{ member.adherent_desk }}
-                                            {% else %}
-                                                <i class="fas fa-phone-square-alt"></i> : {{ member.adherent_desk }} / <i class="fas fa-mobile-alt"></i> : {{ member.adherent_gsm }}
-                                            {% endif %}
-                                        </p>
-                                    </div>
-
-                                </div>
+                                <p class="text-start">
+                                    {% if member.avatarName is null %}
+                                        <img class="img-fluid img-rounded" src="{{ asset('images/svg/user.svg') }}" alt="sans_avatar" style="max-height: 240px;max-width: 240px;">
+                                    {% elseif member.avatarName is not null %}
+                                        <img class="card-img-top img-fluid img-rounded" src="{{ vich_uploader_asset(member, 'avatarFile', 'App\\Entity\\Admin\\Member') | imagine_filter('avatar_image') }}" alt="{{ member.logoStructureName }}" style="max-height: 240px;max-width: 240px;">
+                                    {% endif %}
+                                </p>
+                                <p class="text-start">
+                                    {{ member.firstName }}  {{ member.lastName }}<br>
+                                    <a href="mailto:{{ member.adherent_email }}"><i class="fas fa-envelope-open-text"></i> {{ member.adherent_email }}</a><br>
+                                    {% if member.adherent_desk is null and member.adherent_gsm is null %}
+                                    {% elseif member.adherent_desk is null and member.adherent_gsm is not null %}
+                                        <i class="fas fa-mobile-alt"></i> : {{ member.adherent_gsm }}
+                                    {% elseif member.adherent_desk is not null and member.adherent_gsm is null %}
+                                        <i class="fas fa-phone-square-alt"></i> : {{ member.adherent_desk }}
+                                    {% else %}
+                                        <i class="fas fa-phone-square-alt"></i> : {{ member.adherent_desk }} / <i class="fas fa-mobile-alt"></i> : {{ member.adherent_gsm }}
+                                    {% endif %}
+                                </p>
                             </div>
                             {# Description du collaborateur #}
                             <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">

@@ -7,7 +7,7 @@
         <th>Email de contact</th>
         <th>Contacts</th>
         <th>Présence</th>
-        <th>IsCotisation</th>
+        <th>Cotisation</th>
         <th>actions</th>
     </tr>
     </thead>
@@ -32,7 +32,13 @@
                 <a href="{{ path('op_admin_parrainage_secondmeeting', {'id':parrainage.id})}}" class="btn btn-light btn-sm js-secondmeeting"><i class="bi bi-check2-all"></i></a>
                 {% endif %}
             </td>
-            <td>{{ parrainage.isCotisation ? 'Yes' : 'No' }}</td>
+            <td>
+                {% if parrainage.isCotisation == 0 %}
+                    <a class="js-verified" href="{{ path('op_admin_parrainage_iscotisation', {'id': parrainage.id}) }}"><i class="far fa-times-circle text-danger"></i></a>
+                {% elseif parrainage.isCotisation== 1 %}
+                    <a class="js-verified" href="{{ path('op_admin_parrainage_iscotisation', {'id': parrainage.id}) }}"><i class="far fa-check-circle text-success"></i></a>
+                {% endif %}
+            </td>
             <td>
                 <a href="{{ path('op_admin_parrainage_index', {'id': parrainage.id}) }}">show</a>
                 <a href="{{ path('op_admin_parrainage_index', {'id': parrainage.id}) }}">edit</a>

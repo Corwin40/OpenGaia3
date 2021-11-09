@@ -23,7 +23,7 @@ class EventController extends AbstractController
 {
     /**
      * @Route("/gest/app/event/", name="op_gestapp_event_index", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_USER")
      */
     public function indexAdmin(EventRepository $eventRepository): Response
     {
@@ -47,6 +47,7 @@ class EventController extends AbstractController
     }
 
     /**
+     * Liste les évènement sur le module de section Evenements
      * @Route("/gest/app/ListAllEventPublish/", name="op_gestapp_event_ListAllEventPublish", methods={"GET"})
      */
     public function ListAllEventPublish(): Response
@@ -101,7 +102,7 @@ class EventController extends AbstractController
                 //->text('Sending emails is fun again!')
                 ->html('
                     <h1>Just à Faire<small> - Nouvel évenement créé</small></h1>
-                    <p>Un nouvel évèneent a été crée par : <br>Vous pouvez voir ce dernier dans votre espace.</p>
+                    <p>Un nouvel évènement a été crée par : <br>Vous pouvez voir ce dernier dans votre espace.</p>
                     ');
             $mailer->send($email);
 
@@ -183,7 +184,7 @@ class EventController extends AbstractController
 
     /**
      * Permet de mettre en menu la poge ou non
-     * @Route("/admin/event/valid/{id}", name="op_gestapp_event_isvalid")
+     * @Route("/gestapp/event/valid/{id}", name="op_gestapp_event_isvalid")
      */
     public function jsMenuvalid(Event $event, EntityManagerInterface $em) : Response
     {
@@ -198,10 +199,36 @@ class EventController extends AbstractController
         if($isvalid == true){
             $event->setIsValidBy(0);
             $em->flush();
-            return $this->json(['code'=> 200, 'message' => "L'évènement est dépublié du site"], 200);
+            return $this->json(['code'=> 200, 'message' => "L'évènement est validé"], 200);
         }
         // Si la page est déja dépubliée, alors on publie
         $event->setIsValidBy(1);
+        $em->flush();
+        return $this->json(['code'=> 200, 'message' => "L'évènement est validé"], 200);
+    }
+
+    /**
+     * Permet de mettre en menu la poge ou non
+     * @Route("/gestapp/event/publish/{id}", name="op_gestapp_event_ispublish")
+     */
+    public function jsMenupublish(Event $event, EntityManagerInterface $em) : Response
+    {
+        $user = $this->getUser();
+        $ispublish = $event->getIsPublish();
+
+        // renvoie une erreur car l'utilisateur n'est pas connecté
+        if(!$user) return $this->json([
+            'code' => 403,
+            'message'=> "Vous n'êtes pas connecté"
+        ], 403);
+        // Si la page est déja publiée, alors on dépublie
+        if($ispublish == true){
+            $event->setIsPublish(0);
+            $em->flush();
+            return $this->json(['code'=> 200, 'message' => "L'évènement est dépublié du site"], 200);
+        }
+        // Si la page est déja dépubliée, alors on publie
+        $event->setIsPublish(1);
         $em->flush();
         return $this->json(['code'=> 200, 'message' => "L'évènement est publié sur le site"], 200);
     }

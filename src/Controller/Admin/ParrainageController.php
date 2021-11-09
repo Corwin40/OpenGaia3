@@ -6,6 +6,7 @@ use App\Entity\Admin\Parameter;
 use App\Entity\Admin\Parrainage;
 use App\Form\Admin\ParrainageType;
 use App\Repository\Admin\ParrainageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -183,6 +184,29 @@ class ParrainageController extends AbstractController
             'liste' => $this->renderView('admin/parrainage/include/_liste.html.twig', [
                 'parrainages' => $parrainages,
             ]),
+        ], 200);
+    }
+
+    /**
+     * @Route("/opadmin/parrainage/iscotisation/{id}", name="op_admin_parrainage_iscotisation", methods={"GET","POST"})
+     */
+    public function isCotisation(Request $request, EntityManagerInterface $em, Parrainage $parrainage)
+    {
+        $isCotisation = $parrainage->getIsCotisation();
+        // Si l'invitaté a déjà contisé, on dépublie
+        if($isCotisation == true){
+            $parrainage->setIsCotisation(0);
+            $em->flush();
+            return $this->json(['code'=> 200, 'message' => "L'utilisateur n'accède plus à l'administration"], 200);
+        }
+        $parrainage->setIsCotisation(1);
+        $this->getDoctrine()->getManager()->flush();
+
+        $parrainages = $this->getDoctrine()->getRepository(Parrainage::class)->findAll();
+
+        return $this->json([
+            'code'=> 200,
+            'message' => "Votre invité s'est inscrit au JUSTàFAIRE.",
         ], 200);
     }
 }

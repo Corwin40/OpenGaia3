@@ -21,13 +21,14 @@ class AdminController extends AbstractController
      */
     public function index(): Response
     {
-        $user= $this->getUser();
+        $user = $this->getUser();
+        $iduser = $user->getId();
         $members = $this->getDoctrine()->getRepository(Member::class)->findBy(array('type' => 'member'));
         $recommandations = $this->getDoctrine()->getRepository(Recommandation::class)->findAll();
         $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
         $annonces = $this->getDoctrine()->getRepository(Annonce::class)->findAll();
         $messages = $this->getDoctrine()->getRepository(Message::class)->MessagesByUser($user);
-        $invitations = $this->getDoctrine()->getRepository(Parrainage::class)->findBy(array('author' => $user));
+        $invitations = $this->getDoctrine()->getRepository(Parrainage::class)->Parrainnage($iduser);
         return $this->render('admin/admin/index.html.twig', [
             'members' => $members,
             'recommandations' => $recommandations,

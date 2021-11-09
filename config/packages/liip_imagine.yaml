@@ -2,6 +2,8 @@
 liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     # driver: "gd"
+    webp:
+        generate: true
 
     filter_sets:
         article_front_image:
@@ -45,13 +47,13 @@ liip_imagine:
                     position : center
                     color : '#cdb55f'
         prez_event:
-            quality: 150
+            quality: 75
             filters:
                 thumbnail:
                     size: [ 800, 500 ]
                     mode: outbond
         history_event:
-            quality: 150
+            quality: 75
             filters:
                 thumbnail:
                     size: [ 194, 130 ]

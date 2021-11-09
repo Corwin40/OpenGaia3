@@ -6,7 +6,6 @@
     {{ parent() }}
     <script>
         window.onload = function(){
-
             // Fonction d'appel du controller firstMeeting
             function onClickFirstMeeting(event){
                 event.preventDefault();
@@ -57,6 +56,39 @@
                     .catch()
             }
 
+            //fonction d'appel du controller secondMeeting
+            function onClickIsCotisation(event){
+                event.preventDefault();
+                const url = this.href;
+                const icone = this.querySelector('i');
+                axios
+                    .post(url)
+                    .then(function(response){
+                        // Rechargement de l'icone
+                        if(icone.classList.contains('fa-check-circle')) {
+                            icone.classList.replace('fa-check-circle', 'fa-times-circle');
+                            icone.classList.replace('text-success', 'text-danger');
+                        }
+                        else {
+                            icone.classList.replace('fa-times-circle', 'fa-check-circle');
+                            icone.classList.replace('text-danger', 'text-success');
+                        };
+                        // Ouverture du toast
+                        var option = {
+                            animation : true,
+                            autohide: true,
+                            delay : 3000,
+                        };
+                        var toastHTMLElement = document.getElementById("toaster");
+                        var message = response.data.message;
+                        var toastBody = toastHTMLElement.querySelector('.toast-body') // selection de l'élément possédant le message
+                        toastBody.textContent = message;
+                        var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+                        toastElement.show();
+                    })
+                    .catch()
+            }
+
             // Création de l'évènement sur le bouton js-firstmeeting
             document.querySelectorAll('a.js-firstmeeting').forEach(function (link){
                 link.addEventListener('click', onClickFirstMeeting);
@@ -65,6 +97,11 @@
             // Création de l'évènement sur le bouton js-firstmeeting
             document.querySelectorAll('a.js-secondmeeting').forEach(function (link){
                 link.addEventListener('click', onClickSecondMeeting);
+            })
+
+            // Création de l'évènement sur le bouton js-firstmeeting
+            document.querySelectorAll('a.js-verified').forEach(function (link){
+                link.addEventListener('click', onClickIsCotisation);
             })
         }
     </script>

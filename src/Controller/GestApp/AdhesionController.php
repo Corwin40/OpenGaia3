@@ -200,7 +200,7 @@ class AdhesionController extends AbstractController
         $structure->setAddress($adhesion->getAddress());
         $structure->setZipcode($adhesion->getZipcode());
         $structure->setCity($adhesion->getCity());
-        $structure->setRespFirstName($adhesion->getGerantFirstname());
+        $structure->setRespFirstName($adhesion->getGerantLastname());
         $structure->setRespLastName($adhesion->getGerantLastname());
         $structure->setSiret($adhesion->getSiret());
         $structure->setEmailStruct($adhesion->getEmail());
