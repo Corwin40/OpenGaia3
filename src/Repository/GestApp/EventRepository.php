@@ -34,6 +34,7 @@ class EventRepository extends ServiceEntityRepository
                 e.placeComplement,
                 e.placeZipcode,
                 e.placeCity,
+                e.contactEventEmail,
                 e.isValidBy,
                 e.urlFacebookEvent,
                 e.urlInstagramEvent

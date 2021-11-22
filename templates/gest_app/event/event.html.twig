@@ -23,6 +23,7 @@
                         </p>
                         <h3 class="text-capitalize-h">le {{ event.eventAt|format_datetime('medium', 'none', locale='fr') }} à partir de {{ event.eventtimeAt|date('H:i') }}</h3>
                         <p>{{ event.description|raw }}</p>
+                        <a href="mailto:{{ event.contactEventEmail }}"><i class="fas fa-envelope-open-text"></i> {{ event.contactEventEmail }}</a>
                         {% if event.placeAddress is null %}
                         {% else %}
                         <div class="place-event m-3">

@@ -35,7 +35,7 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/op_admin, roles: [ROLE_ADMIN , ROLE_USER]}
+        - { path: ^/opadmin, roles: [ROLE_ADMIN , ROLE_USER]}
         - { path: ^/opadmin/parrainage/add, , roles: [ROLE_USER]}
         - { path: ^/gest/app/event/, roles: [ROLE_USER]}
         - { path: ^/profile, roles: ROLE_USER }
