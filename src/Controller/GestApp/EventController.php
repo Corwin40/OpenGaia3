@@ -8,6 +8,7 @@ use App\Entity\GestApp\EventGal;
 use App\Form\GestApp\EventType;
 use App\Repository\GestApp\EventRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,12 +26,17 @@ class EventController extends AbstractController
      * @Route("/gest/app/event/", name="op_gestapp_event_index", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
-    public function indexAdmin(EventRepository $eventRepository): Response
+    public function indexAdmin(EventRepository $eventRepository, Request $request, PaginatorInterface $paginator): Response
     {
-
+        $data = $eventRepository->findBy([], ['eventAt'=> 'DESC']);
+        $events = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            10
+        );
         $user = $this->getUser()->getId();
         return $this->render('gest_app/event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+            'events' => $events,
         ]);
     }
 
@@ -274,9 +280,9 @@ class EventController extends AbstractController
                 ');
             $mailer->send($email);
             }
-
-
             $event->setTwoDay(1);
         }
     }
+
+
 }

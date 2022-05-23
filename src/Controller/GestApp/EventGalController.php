@@ -2,7 +2,9 @@
 
 namespace App\Controller\GestApp;
 
+use App\Entity\GestApp\Event;
 use App\Entity\GestApp\EventGal;
+use App\Form\GestApp\EventGal2Type;
 use App\Form\GestApp\EventGalType;
 use App\Repository\GestApp\EventGalRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -135,6 +137,34 @@ class EventGalController extends AbstractController
 
         return $this->render('gest_app/event_gal/showgalbyevent.html.twig',[
             'galeries' => $galeries
+        ]);
+    }
+
+    /**
+     * @Route("/opadmin/gestapp/addbyevent/{idevent}", name="op_gestapp_eventgal_addbyevent", methods={"GET","POST"})
+     */
+    public function AddImageByEvent($idevent, Request $request, EntityManagerInterface $em)
+    {
+        $event = $em->getRepository(Event::class)->find($idevent);
+        //dd($event);
+        $eventGal = new EventGal();
+        $form = $this->createForm(EventGal2Type::class, $eventGal);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+
+            $eventGal->setEvent($event);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($eventGal);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('op_gestapp_eventgal_new');
+        }
+
+        return $this->render('gest_app/event_gal/addbyevent.html.twig', [
+            'event_gal' => $eventGal,
+            'event' => $event,
+            'form' => $form->createView(),
         ]);
     }
 }

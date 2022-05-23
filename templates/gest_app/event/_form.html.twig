@@ -173,10 +173,10 @@
         {% if app.request.get('_route') == 'op_gestapp_event_edit' %}
             <div class="tab-pane" id="Galerie" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 col-xl-2 col-xxl-2">
-                    {{ include('gest_app/event/include/_addeventgal.html.twig') }}
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                    {{ render(controller('App\\Controller\\GestApp\\EventGalController::AddImageByEvent', {'idevent': event.id})) }}
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 col-xl-10 col-xxl-10">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
                     {% include 'gest_app/event_gal/showgalbyevent.html.twig' with galeries %}
                 </div>
             </div>

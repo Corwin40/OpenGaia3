@@ -34,6 +34,14 @@
             });
         }
 
+        function addimage(event){
+            event.preventDefault()
+            const file = document.getElementById('event_gal2_imageFile_file')
+            const form = new FormData()
+            form.append('imageFile', file.files[0])
+            console.log(form)
+        }
+
         // function definition de l'orientation de l'image
         function onClickimgOrient(event){
             event.preventDefault();
@@ -52,6 +60,11 @@
         // Ajout d'un event sur le click portrait ou paysage
         document.querySelectorAll('a.img-orientation').forEach(function (link){
             link.addEventListener('click', onClickimgOrient);
+        })
+
+        // Ajout d'un event sur le click portrait ou paysage
+        document.querySelectorAll('a.js-addimage').forEach(function (link){
+            link.addEventListener('click', addimage);
         })
 
     </script>

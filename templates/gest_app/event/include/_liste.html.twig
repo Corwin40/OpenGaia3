@@ -6,6 +6,7 @@
             {% if is_granted('ROLE_ADMIN') %}
                 <th>Auteur</th>
             {% endif %}
+            <th class="text-center">Date</th>
             <th class="d-none d-sm-table-cell ">Description</th>
             <th class="text-center">Publié</th>
             <th class="text-center">Validé</th>
@@ -24,6 +25,7 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <td>{{ event.author }}</td>
                 {% endif %}
+                <td class="text-center">{{ event.eventAt? event.eventAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                 <td class="d-none d-sm-table-cell">{{ event.description|u.truncate(100, ' ...')|raw }}</td>
                 <td class="text-center">
                     {% if event.isPublish == 1 %}

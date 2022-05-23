@@ -1,0 +1,17 @@
+{{ form_start(form) }}
+<div class="card">
+    <div class="card-header">
+        AJOUT DE MEDIAS
+    </div>
+    <div class="card-body">
+        <form id="addimage" enctype="multipart/form-data">
+            {{ form_row(form.imageFile) }}
+            {{ form_errors(form.imageFile) }}
+        </form>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-sm btn-outline-secondary js-addimage">{{ button_label|default('Ajouter') }}</a>
+    </div>
+</div>
+{{ form_end(form) }}
+

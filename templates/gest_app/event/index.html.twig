@@ -126,8 +126,14 @@
                     <div class="card-body">
                         <h4>Liste des Evènements</h4>
                         <p>Créer, Modifier ou supprimer vos évènements</p>
+                        <div class="navigation">
+                            {{ knp_pagination_render(events, 'include/pagination.html.twig') }}
+                        </div>
                         <div id="liste">
                             {{ include('gest_app/event/include/_liste.html.twig') }}
+                        </div>
+                        <div class="navigation">
+                            {{ knp_pagination_render(events, 'include/pagination.html.twig') }}
                         </div>
                     </div>
                 </div>

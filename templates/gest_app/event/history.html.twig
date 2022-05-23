@@ -1,9 +1,7 @@
 {% if events|length <= 2 %}
 <div class="row justify-content-center">
     {% for event in events %}
-        <div class="col
-
-        -xs-12 col-sm-6 col-md-4 col-xl-2 col-xxl-2">
+        <div class="col-12 col-sm-6 col-md-4 col-xl-2 col-xxl-2">
             <div id="member-card" class="card">
                 {% if event.visuelName is not null %}
                     <img src="{{ vich_uploader_asset(event, 'visuelFile', 'App\\Entity\\GestApp\\Event')|imagine_filter('history_event') }}" class="card-img" alt="{{ event.name }}">
@@ -26,9 +24,9 @@
 </div>
 {% else %}
 <div class="row justify-content-center">
-    <div class="flickity-button-white" data-flickity='{"pageDots": false,"cellAlign": "left", "wrapAround": true, "imagesLoaded": true}'>
+    <div class="flickity-button-white" data-flickity='{"resize":false, "pageDots": false,"cellAlign": "left", "wrapAround": true, "imagesLoaded": true}'>
         {% for event in events %}
-            <div class="col-sm-6 col-md-4 col-xl-2 col-xxl-2 px-1">
+            <div class="col-12 col-sm-6 col-md-4 col-xl-2 col-xxl-2 px-1">
                 <div id="member-card" class="card">
                     {% if event.visuelName is not null %}
                         <img src="{{ vich_uploader_asset(event, 'visuelFile', 'App\\Entity\\GestApp\\Event')|imagine_filter('history_event') }}" class="card-img" alt="{{ event.name }}">
