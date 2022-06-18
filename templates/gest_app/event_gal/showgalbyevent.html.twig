@@ -1,14 +1,20 @@
-<div class="row">
+<div class="row g-1">
     {% for galerie in galeries %}
-        <div class="col-2">
+        <div class="col-4">
             <div class="card">
-                <img src="{{ vich_uploader_asset(galerie) }}" alt="{{ galerie.alt }}" class="card-img-top" >
+                <img src="{{ vich_uploader_asset(galerie)|imagine_filter('eventgal_publish') }}" alt="{{ galerie.alt }}" class="card-img-top" >
                 <div class="card-footer">
-                    <p>
-                        {{ galerie.name }}
-                        <a class="img-orientation" href="{{ path('op_gestapp_eventgal_orientation', {'id': event.id, 'orientation':'portrait'}) }}"><i class="bi bi-file-image text-muted"></i></a>
-                        <a class="img-orientation" href="{{ path('op_gestapp_eventgal_orientation', {'id': event.id, 'orientation':'paysage'}) }}"><i class="bi bi-image text-muted"></i></a>
-                    </p>
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-start">
+                                {{ galerie.name }}
+                            </p>
+                            <p class="text-end">
+                                <a href="{{ path('op_gestapp_eventgal_supprbyevent', {'id': galerie.id}) }}" class="supprimg text-danger "><i class="bi bi-x-square"></i></a>
+                            </p>
+                        </div>
+                    </div>
+                    
 
                 </div>
             </div>

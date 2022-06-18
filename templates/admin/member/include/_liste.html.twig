@@ -3,11 +3,11 @@
     <tr>
         <th>Membre</th>
         <th>Structure</th>
-        <th>Contacts téléphoniques</th>
-        <th>Email</th>
-        <th>Créée le</th>
-        <th>Modifiée le</th>
-        <th>Actif</th>
+        <th class="d-none d-sm-table-cell">Contacts téléphoniques</th>
+        <th class="d-none d-sm-table-cell">Email</th>
+        <th class="d-none d-sm-table-cell">Créée le</th>
+        <th class="d-none d-sm-table-cell">Modifiée le</th>
+        <th class="d-none d-sm-table-cell">Actif</th>
         <th>actions</th>
     </tr>
     </thead>
@@ -22,11 +22,11 @@
                     <b><a href="{{ path('op_admin_structure_edit', {'id':member.structure.id}) }}">{{ member.structure }}</a></b>
                 {% endif %}
             </td>
-            <td>{{ member.phoneDesk }} / {{ member.phoneGsm }}</td>
-            <td>{{ member.email }}</td>
-            <td>{{ member.createdAt ? member.createdAt|format_datetime('medium', 'none', locale='fr') }}</td>
-            <td>{{ member.updatedAt ? member.updatedAt|format_datetime('medium', 'none', locale='fr') }}</td>
-            <td>
+            <td class="d-none d-sm-table-cell">{{ member.phoneDesk }} / {{ member.phoneGsm }}</td>
+            <td class="d-none d-sm-table-cell">{{ member.email }}</td>
+            <td class="d-none d-sm-table-cell">{{ member.createdAt ? member.createdAt|format_datetime('medium', 'none', locale='fr') }}</td>
+            <td class="d-none d-sm-table-cell">{{ member.updatedAt ? member.updatedAt|format_datetime('medium', 'none', locale='fr') }}</td>
+            <td  class="d-none d-sm-table-cell">
                 {% if member.isVerified == 0 %}
                     <a class="js-verified" href="{{ path('op_admin_member_verified', {'id': member.id}) }}"><i class="far fa-times-circle text-danger"></i></a>
                 {% elseif member.isVerified == 1 %}

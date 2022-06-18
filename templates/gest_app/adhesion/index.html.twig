@@ -68,10 +68,10 @@
     {{ include('gest_app/adhesion/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
-            <div class="col-md-2 col-lg-2 col-xl-2 col-xxl-2">
+            <div class="col-lg-2 col-xl-2 col-xxl-2">
                 {{ include('gest_app/adhesion/include/_section_content_aside.html.twig') }}
             </div>
-            <div class="col-md-10 col-lg-10 col-xl-10 col-xxl-10">
+            <div class="col-lg-10 col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-body">
                         <h4>Liste des demandes d'adhésions</h4>
@@ -84,13 +84,13 @@
                                             <th></th>
                                             <th>Nom & prénom</th>
                                             <th>Société</th>
-                                            <th>Email</th>
-                                            <th>Siret</th>
-                                            <th>Gerant</th>
-                                            <th>UrlWeb</th>
-                                            <th>UrlFacebook</th>
-                                            <th>UrlInstagram</th>
-                                            <th>UrlLinkedin</th>
+                                            <th class="d-none d-sm-table-cell">Email</th>
+                                            <th class="d-none d-sm-table-cell">Siret</th>
+                                            <th class="d-none d-sm-table-cell">Gerant</th>
+                                            <th class="d-none d-sm-table-cell">UrlWeb</th>
+                                            <th class="d-none d-sm-table-cell">UrlFacebook</th>
+                                            <th class="d-none d-sm-table-cell">UrlInstagram</th>
+                                            <th class="d-none d-sm-table-cell">UrlLinkedin</th>
                                             <th>actions</th>
                                         </tr>
                                         </thead>
@@ -100,13 +100,13 @@
                                                 <td><input type="checkbox"></td>
                                                 <td><a href="{{ path('op_gestapp_adhesion_show', {'id':adhesion.id}) }}"><b>{{ adhesion.firstName }} {{ adhesion.lastName }}</b></a></td>
                                                 <td>{{ adhesion.society }}</td>
-                                                <td>{{ adhesion.email }}</td>
-                                                <td>{{ adhesion.siret }}</td>
-                                                <td>{{ adhesion.gerantFirstname }} {{ adhesion.gerantLastName }}</td>
-                                                <td>{{ adhesion.urlWeb }}</td>
-                                                <td>{{ adhesion.urlFacebook }}</td>
-                                                <td>{{ adhesion.urlInstagram }}</td>
-                                                <td>{{ adhesion.urlLinkedin }}</td>
+                                                <td class="d-none d-sm-table-cell">{{ adhesion.email }}</td>
+                                                <td class="d-none d-sm-table-cell">{{ adhesion.siret }}</td>
+                                                <td class="d-none d-sm-table-cell">{{ adhesion.gerantFirstname }} {{ adhesion.gerantLastName }}</td>
+                                                <td class="d-none d-sm-table-cell">{{ adhesion.urlWeb }}</td>
+                                                <td class="d-none d-sm-table-cell">{{ adhesion.urlFacebook }}</td>
+                                                <td class="d-none d-sm-table-cell">{{ adhesion.urlInstagram }}</td>
+                                                <td class="d-none d-sm-table-cell">{{ adhesion.urlLinkedin }}</td>
                                                 <td>
                                                     <a href="{{ path('op_gestapp_adhesion_show', {'id': adhesion.id}) }}"><i class="far fa-eye"></i></a>&nbsp;
                                                     <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ adhesion.id }}">

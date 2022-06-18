@@ -5,12 +5,15 @@
     </div>
     <div class="card-body">
         <form id="addimage" enctype="multipart/form-data">
-            {{ form_row(form.imageFile) }}
-            {{ form_errors(form.imageFile) }}
+            <div>
+                {{ form_row(form.imageFile) }}
+                {{ form_errors(form.imageFile) }}
+            </div>
+
         </form>
     </div>
     <div class="card-footer">
-        <a class="btn btn-sm btn-outline-secondary js-addimage">{{ button_label|default('Ajouter') }}</a>
+        <button class="btn btn-sm btn-outline-secondary">{{ button_label|default('Ajouter') }}</button>
     </div>
 </div>
 {{ form_end(form) }}

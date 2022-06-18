@@ -34,12 +34,10 @@
             });
         }
 
-        function addimage(event){
+        function supprimage(event){
             event.preventDefault()
-            const file = document.getElementById('event_gal2_imageFile_file')
-            const form = new FormData()
-            form.append('imageFile', file.files[0])
-            console.log(form)
+            let url = this.href
+            console.log(url)
         }
 
         // function definition de l'orientation de l'image
@@ -63,8 +61,8 @@
         })
 
         // Ajout d'un event sur le click portrait ou paysage
-        document.querySelectorAll('a.js-addimage').forEach(function (link){
-            link.addEventListener('click', addimage);
+        document.querySelectorAll('a.supprimg').forEach(function (link){
+            link.addEventListener('click', supprimage);
         })
 
     </script>
@@ -83,7 +81,31 @@
                     <div class="card-header">
                         <h3>Modifier un évènement</h3>
                     </div>
-                    {{ include('gest_app/event/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                    <div class="card_body">
+                        <div class="row g-1">
+                            <div class="col-lg-5 col-xl-5 col-xxl-5">
+                                <div class="card">
+                                    {{ include('gest_app/event/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-xl-7 col-xxl-7">
+                                {% if app.request.get('_route') == 'op_gestapp_event_edit' %}
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
+                                                {{ render(controller('App\\Controller\\GestApp\\EventGalController::AddImageByEvent', {'idevent':event.id})) }}
+                                            </div>
+                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+                                                {% include 'gest_app/event_gal/showgalbyevent.html.twig' with galeries %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

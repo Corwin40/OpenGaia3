@@ -13,9 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Uuid;
 
 /**
- * @Route("/gest/app/eventgal")
+ * @Route("")
  */
 class EventGalController extends AbstractController
 {
@@ -146,19 +147,23 @@ class EventGalController extends AbstractController
     public function AddImageByEvent($idevent, Request $request, EntityManagerInterface $em)
     {
         $event = $em->getRepository(Event::class)->find($idevent);
+        $uuid = Uuid::V1_MAC;
         //dd($event);
         $eventGal = new EventGal();
-        $form = $this->createForm(EventGal2Type::class, $eventGal);
+        $form = $this->createForm(EventGal2Type::class, $eventGal, [
+            'action' => $this->generateUrl('op_gestapp_eventgal_addbyevent', ['idevent'=>$idevent]),
+            'method' => 'POST'
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-
+            $eventGal->setName($event->getName().$uuid);
             $eventGal->setEvent($event);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($eventGal);
             $entityManager->flush();
 
-            return $this->redirectToRoute('op_gestapp_eventgal_new');
+            return $this->redirectToRoute('op_gestapp_event_edit', ['id'=> $idevent]);
         }
 
         return $this->render('gest_app/event_gal/addbyevent.html.twig', [
@@ -166,5 +171,13 @@ class EventGalController extends AbstractController
             'event' => $event,
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/opadmin/gestapp/supprbyevent/{id}", name="op_gestapp_eventgal_supprbyevent", methods={"GET","POST"})
+     */
+    public function SupprImageByEvent($idevent, Request $request, EntityManagerInterface $em)
+    {
+
     }
 }

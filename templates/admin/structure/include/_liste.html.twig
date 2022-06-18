@@ -2,12 +2,12 @@
     <thead>
     <tr>
         <th>Structure</th>
-        <th>Gérant</th>
-        <th>Adressse</th>
-        <th>Site web</th>
-        <th>Email</th>
-        <th>Bureau</th>
-        <th>Mobile</th>
+        <th class="d-none d-sm-table-cell">Gérant</th>
+        <th class="d-none d-sm-table-cell">Adresse</th>
+        <th class="d-none d-sm-table-cell">Site web</th>
+        <th class="d-none d-sm-table-cell">Email</th>
+        <th class="d-none d-sm-table-cell">Bureau</th>
+        <th class="d-none d-sm-table-cell">Mobile</th>
         <th>Collaborateur</th>
         <th>Actions</th>
     </tr>
@@ -16,16 +16,16 @@
     {% for structure in structures %}
         <tr>
             <td>{{ structure.name }}</td>
-            <td>{{ structure.respFirstName }} {{ structure.respLastName }}</td>
-            <td>
+            <td class="d-none d-sm-table-cell">{{ structure.respFirstName }} {{ structure.respLastName }}</td>
+            <td class="d-none d-sm-table-cell">
                 {{ structure.address }}<br>
                 {{ structure.complement }}<br>
                 {{ structure.zipcode }} {{ structure.city }}
             </td>
-            <td>{{ structure.urlWeb }}</td>
-            <td>{{ structure.EmailStruct }}</td>
-            <td>{{ structure.phoneDesk }}</td>
-            <td>{{ structure.phoneGsm }}</td>
+            <td class="d-none d-sm-table-cell">{{ structure.urlWeb }}</td>
+            <td class="d-none d-sm-table-cell">{{ structure.EmailStruct }}</td>
+            <td class="d-none d-sm-table-cell">{{ structure.phoneDesk }}</td>
+            <td class="d-none d-sm-table-cell">{{ structure.phoneGsm }}</td>
             <td>
                 {% if structure.collaborators|length > 0 %}
                     {% for collaborator in structure.collaborators %}

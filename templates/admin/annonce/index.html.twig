@@ -7,10 +7,10 @@
     {{ include('admin/member/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
-            <div class="col-2">
+            <div class="col-lg-2 col-xl-2 col-xxl-2">
                 {{ include('admin/member/include/_section_content_aside.html.twig') }}
             </div>
-            <div class="col-10">
+            <div class="col-lg-10 col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-body">
                         <h4>Liste des annonces</h4>
@@ -19,11 +19,11 @@
                             <thead>
                                 <tr>
                                     <th>Titre</th>
-                                    <th>Contenu</th>
-                                    <th>Dates de publication</th>
+                                    <th class="d-none d-sm-table-cell">Contenu</th>
+                                    <th class="d-none d-sm-table-cell">Dates de publication</th>
                                     <th>Auteur</th>
-                                    <th>Créer le</th>
-                                    <th>Modifiée le</th>
+                                    <th class="d-none d-sm-table-cell">Créer le</th>
+                                    <th class="d-none d-sm-table-cell">Modifiée le</th>
                                     <th>actions</th>
                                 </tr>
                             </thead>
@@ -31,11 +31,11 @@
                             {% for annonce in annonce %}
                                 <tr>
                                     <td><a href="{{ path('op_admin_annonce_show', {'id': annonce.id}) }}">{{ annonce.title }}</a></td>
-                                    <td>{{ annonce.content }}</td>
-                                    <td>{{ annonce.publishAt ? annonce.publishAt|format_datetime('medium', 'none', locale='fr') : ''  }} au {{ annonce.dispublishAt ? annonce.dispublishAt|format_datetime('medium', 'none', locale='fr') : ''  }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ annonce.content }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ annonce.publishAt ? annonce.publishAt|format_datetime('medium', 'none', locale='fr') : ''  }} au {{ annonce.dispublishAt ? annonce.dispublishAt|format_datetime('medium', 'none', locale='fr') : ''  }}</td>
                                     <td>{{ annonce.author }}</td>
-                                    <td>{{ annonce.createdAt ? annonce.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
-                                    <td>{{ annonce.updatedAt ? annonce.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ annonce.createdAt ? annonce.createdAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
+                                    <td class="d-none d-sm-table-cell">{{ annonce.updatedAt ? annonce.updatedAt|format_datetime('medium', 'none', locale='fr') : '' }}</td>
                                     <td>
                                         <a href="{{ path('op_admin_annonce_edit', {'id': annonce.id}) }}"><i class="far fa-eye"></i></a>&nbsp;&nbsp;
                                         <a href="#" class="js-modalSuppr text-danger" type="button" data-bs-toggle="modal" data-bs-target="#Suppr" data-bs-whatever="{{ annonce.id }}">
