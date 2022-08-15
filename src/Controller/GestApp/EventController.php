@@ -43,12 +43,17 @@ class EventController extends AbstractController
     /**
      * @Route("/gest/app/event2/", name="op_gestapp_event_index2", methods={"GET"})
      */
-    public function indexUser(EventRepository $eventRepository): Response
+    public function indexUser(Request $request, EventRepository $eventRepository, PaginatorInterface $paginator): Response
     {
-
         $user = $this->getUser()->getId();
+        $data = $eventRepository->findBy(array("author"=> $user));
+        $events = $paginator->paginate(
+            $data,
+            $request->query->getInt('page', 1),
+            10
+        );
         return $this->render('gest_app/event/index.html.twig', [
-            'events' => $eventRepository->findBy(array("author"=> $user)),
+            'events' => $events,
         ]);
     }
 

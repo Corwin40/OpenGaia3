@@ -7,8 +7,10 @@ use App\Entity\GestApp\EventGal;
 use App\Form\GestApp\EventGal2Type;
 use App\Form\GestApp\EventGalType;
 use App\Repository\GestApp\EventGalRepository;
+use Doctrine\DBAL\Driver\PDO\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -174,10 +176,25 @@ class EventGalController extends AbstractController
     }
 
     /**
-     * @Route("/opadmin/gestapp/supprbyevent/{id}", name="op_gestapp_eventgal_supprbyevent", methods={"GET","POST"})
+     * @Route("/opadmin/gestapp/supprimg/{id}", name="op_gestapp_eventgal_supprimg", methods={"GET","POST"})
      */
-    public function SupprImageByEvent($idevent, Request $request, EntityManagerInterface $em)
+    public function SupprImageByEvent(EventGal $eventGal, Request $request, EntityManagerInterface $em)
     {
+        $idEvent = $eventGal->getEvent()->getId();
+        if(!$eventGal){
+            throw new Exception("Erreur : pas d'image enregistré");
+        }
+        $em->remove($eventGal);
+        $em->flush();
 
+        $eventGals = $em->getRepository(EventGal::class)->findBy(['event'=>$idEvent]);
+
+        return $this->json([
+            'code'      => 200,
+            'message'   => "Ok",
+            'liste' => $this->renderView('gest_app/event_gal/showgalbyevent.html.twig', [
+                'galeries' => $eventGals,
+            ])
+        ], 200);
     }
 }

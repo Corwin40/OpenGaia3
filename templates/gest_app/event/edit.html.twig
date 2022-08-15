@@ -32,39 +32,26 @@
                 dateFormat: "H:i",
                 time_24hr: true
             });
+
+            function supprimage(event){
+                event.preventDefault()
+                let url = this.href
+                axios
+                    .post(url)
+                    .then(function (response){
+                        const liste = document.getElementById('liste').innerHTML = response.data.liste
+                        // rechargement des events
+                        document.querySelectorAll('a.supprimg').forEach(function (link){
+                            link.addEventListener('click', supprimage);
+                        })
+                    })
+            }
+
+            // Ajout d'un event sur le click portrait ou paysage
+            document.querySelectorAll('a.supprimg').forEach(function (link){
+                link.addEventListener('click', supprimage);
+            })
         }
-
-        function supprimage(event){
-            event.preventDefault()
-            let url = this.href
-            console.log(url)
-        }
-
-        // function definition de l'orientation de l'image
-        function onClickimgOrient(event){
-            event.preventDefault();
-            const url = this.href;
-            const icone = this.querySelector('i');
-            axios
-                .post(url)
-                .then(function(response){
-                    if(icone.classList.contains('text-muted')) {
-                        icone.classList.replace('text-muted', 'text-primary');
-                        icone.classList.replace('text-primary', 'text-muted');
-                    };
-                });
-        }
-
-        // Ajout d'un event sur le click portrait ou paysage
-        document.querySelectorAll('a.img-orientation').forEach(function (link){
-            link.addEventListener('click', onClickimgOrient);
-        })
-
-        // Ajout d'un event sur le click portrait ou paysage
-        document.querySelectorAll('a.supprimg').forEach(function (link){
-            link.addEventListener('click', supprimage);
-        })
-
     </script>
 {%  endblock %}
 
@@ -96,7 +83,7 @@
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 col-xxl-3">
                                                 {{ render(controller('App\\Controller\\GestApp\\EventGalController::AddImageByEvent', {'idevent':event.id})) }}
                                             </div>
-                                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
+                                            <div id="liste" class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 col-xxl-9">
                                                 {% include 'gest_app/event_gal/showgalbyevent.html.twig' with galeries %}
                                             </div>
                                         </div>
