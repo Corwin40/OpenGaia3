@@ -9,7 +9,7 @@
             <th>Recommandation</th>
             {% if hide == 0 %}<th class="d-none d-lg-table-cell">Description</th>{% endif %}
             <th>Client</th>
-            <th>Contacts</th>
+            <th class="d-none d-sm-table-cell">Contacts</th>
             <th class="d-none d-lg-block">Estimation</th>
             <th>actions</th>
         </tr>
@@ -35,7 +35,7 @@
             </td>
             {% if hide == 0 %}<td class="d-none d-lg-table-cell">{{ recommandation.description }}</td>{% endif %}
             <td>{{ recommandation.clientFirstname }} {{ recommandation.clientLastname }}</td>
-            <td>
+            <td class="d-none d-sm-table-cell">
                 {% if recommandation.ClientDesk is not null %}
                     {{ recommandation.ClientDesk }}
                 {% elseif recommandation.ClientDesk is not null and recommandation.ClientEmail is null and recommandation.clientGsm is not null %}
