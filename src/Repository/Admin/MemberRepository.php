@@ -57,7 +57,8 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
                 m.avatarName AS avatarName, 
                 m.email AS email, 
                 s.name AS structure,
-                m.isVerified AS isVerified, 
+                m.isVerified AS isVerified,
+                s.id AS idStruct, 
                 s.FirstActivity AS FirstActivity, 
                 s.city AS city, 
                 s.urlWeb AS web, 
@@ -65,9 +66,11 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
                 s.urlLinkedin AS Linkedin, 
                 s.urlInstagram AS Instagram,
                 s.logoStructureName AS logoStructureName,
-                s.jaf AS jaf
+                t.id As idteam,
+                t.name AS team
                 ')
             ->join('m.structure', 's')
+            ->join('s.Team', 't')
             ->where('m.isVerified = :isVerified')
             ->andWhere('m.type = :type')
             ->setParameter('isVerified', 1)

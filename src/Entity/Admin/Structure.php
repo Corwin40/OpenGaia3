@@ -248,19 +248,20 @@ class Structure
     private $illustrationthirdSize;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $jaf;
-
-    /**
      * @ORM\OneToMany(targetEntity=Collaborator::class, mappedBy="structure")
      */
     private $collaborators;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Team::class, inversedBy="structures")
+     */
+    private $Team;
 
     public function __construct()
     {
         $this->members = new ArrayCollection();
         $this->collaborators = new ArrayCollection();
+        $this->Team = new ArrayCollection();
     }
 
     /**
@@ -824,6 +825,30 @@ class Structure
                 $collaborator->setStructure(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeam(): Collection
+    {
+        return $this->Team;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->Team->contains($team)) {
+            $this->Team[] = $team;
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        $this->Team->removeElement($team);
 
         return $this;
     }

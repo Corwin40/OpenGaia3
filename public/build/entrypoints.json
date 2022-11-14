@@ -2,54 +2,54 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-7db861.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_bundle_js-node_modules_bootstrap-icons_font_-f88cca.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
-        "/build/vendors-node_modules_aos_dist_aos_js-node_modules_bigpicture_index_js-node_modules_choices_js-891c76.js",
-        "/build/app.js"
+        "/build/runtime.33151ce4.js",
+        "/build/758.f4dfec67.js",
+        "/build/245.7ec5c78a.js",
+        "/build/169.23f6f2fd.js",
+        "/build/225.03d896cf.js",
+        "/build/app.df16cc5c.js"
       ],
       "css": [
-        "/build/vendors-node_modules_fortawesome_fontawesome-free_css_all_css.css",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_bundle_js-node_modules_bootstrap-icons_font_-f88cca.css",
-        "/build/vendors-node_modules_aos_dist_aos_js-node_modules_bigpicture_index_js-node_modules_choices_js-891c76.css",
-        "/build/app.css"
+        "/build/241.1637b1e2.css",
+        "/build/245.73f1f958.css",
+        "/build/225.deb9fd07.css",
+        "/build/app.9fc17f27.css"
       ]
     },
     "admin": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-7db861.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_bundle_js-node_modules_bootstrap-icons_font_-f88cca.js",
-        "/build/vendors-node_modules_flatpickr_dist_flatpickr_js-node_modules_flatpickr_dist_l10n_fr_js.js",
-        "/build/admin.js"
+        "/build/runtime.33151ce4.js",
+        "/build/758.f4dfec67.js",
+        "/build/245.7ec5c78a.js",
+        "/build/673.2a3598cf.js",
+        "/build/admin.5867aab3.js"
       ],
       "css": [
-        "/build/vendors-node_modules_fortawesome_fontawesome-free_css_all_css.css",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_bundle_js-node_modules_bootstrap-icons_font_-f88cca.css",
-        "/build/admin.css"
+        "/build/241.1637b1e2.css",
+        "/build/245.73f1f958.css",
+        "/build/admin.8bdc6fa5.css"
       ]
     },
     "login": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-7db861.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.js",
-        "/build/login.js"
+        "/build/runtime.33151ce4.js",
+        "/build/758.f4dfec67.js",
+        "/build/169.23f6f2fd.js",
+        "/build/login.f0fd5310.js"
       ],
       "css": [
-        "/build/vendors-node_modules_fortawesome_fontawesome-free_css_all_css.css",
-        "/build/login.css"
+        "/build/241.1637b1e2.css",
+        "/build/login.13b1749d.css"
       ]
     },
     "offline": {
       "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-7db861.js",
-        "/build/offline.js"
+        "/build/runtime.33151ce4.js",
+        "/build/758.f4dfec67.js",
+        "/build/offline.cdfac9c9.js"
       ],
       "css": [
-        "/build/offline.css"
+        "/build/offline.1927c9bd.css"
       ]
     }
   }

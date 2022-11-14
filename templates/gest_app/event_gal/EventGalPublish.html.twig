@@ -6,37 +6,57 @@
     {{ parent() }}
     <script>
         window.onload = function(){
+
         }
     </script>
 {% endblock %}
 
 {% block content %}
-    {% set length = event_gals|length %}
-    {% if length < 20 %}
+{% set length = event_gals|length %}
+{% if length == 0 %}
     <section class="container">
         <div class="row">
-            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2 justify-content-center">
-                {% for event_gal in event_gals %}
+            <div class="col-12">
+                <h1>Galerie de l'évenement</h1>
+                <p>La galerie ne contient pas d'éléments pour l'instant.</p>
+            </div>
+        </div>
+    </section>
+{% elseif length < 20 %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Galerie de l'évenement</h1>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="row">
+            {% for event_gal in event_gals %}
+            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-3 justify-content-center">
                 <div class="mt-3 mb-3 g-3">
                     <div class="card img_gall">
                         <a data-bigpicture='{"imgSrc": "{{ vich_uploader_asset(event_gal) }}"}' href="#">
-                            <img class="card-img-top" src="{{ vich_uploader_asset(event_gal) }}" alt="{{ event_gal.alt }}">
+                            <img class="card-img-top" src="{{ vich_uploader_asset(event_gal)|imagine_filter('eventgal_publish') }}" alt="{{ event_gal.alt }}">
                         </a>
                     </div>
                 </div>
-                {% if loop.index % 3 == 0 %}
             </div>
-            <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2 justify-content-center">
-                {% endif %}
-                {% endfor %}
-            </div>
+            {% endfor %}
             <div class="navigation">
                 {# Ajout du template personnalisé pour la pagination en fin du block #}
                 {{ knp_pagination_render(event_gals, 'include/pagination.html.twig') }}
             </div>
         </div>
     </section>
-    {% else %}
+{% else %}
+    <section class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1>Galerie de l'évenement</h1>
+            </div>
+        </div>
+    </section>
     <section class="container">
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-lg-4 col-xl-2 justify-content-center">

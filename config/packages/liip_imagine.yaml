@@ -57,8 +57,7 @@ liip_imagine:
                     size: [ 194, 130 ]
                     mode: outbond
         eventgal_publish:
-            quality: 150
+            quality: 75
             filters:
                 thumbnail:
-                    size: [ 194, 114 ]
-                    mode: outbond
+                    size: [ 304, 228 ]

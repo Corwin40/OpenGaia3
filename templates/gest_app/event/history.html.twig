@@ -10,10 +10,10 @@
                 {% endif %}
                 <div class="card-img-overlay">
                     <div class="align-self-center">
-                        <a href="{{ path('op_gestapp_eventgal_eventgalpublish', {'idevent': event.id}) }}">{{ event.name }}</a>
+                        <a class="showGal" href="{{ path('op_gestapp_eventgal_eventgalpublish', {'eventName': event.name}) }}">{{ event.name }}</a>
                     </div>
                 </div>
-                <a href="{{ path('op_gestapp_eventgal_eventgalpublish', {'idevent': event.id}) }}" class="stretched-link"></a>
+                <a class="showGal2" href="{{ path('op_gestapp_eventgal_eventgalpublish', {'eventName': event.name}) }}" class="stretched-link"></a>
             </div>
         </div>
     {% else %}
@@ -35,10 +35,9 @@
                     {% endif %}
                     <div class="card-img-overlay">
                         <div class="align-self-center">
-                            <a href="{{ path('op_gestapp_eventgal_eventgalpublish', {'idevent': event.id}) }}">{{ event.name }}</a>
+                            <a class="showGal" href="{{ path('op_gestapp_eventgal_eventgalpublish', {'eventName': event.name}) }}">{{ event.name }}</a>
                         </div>
                     </div>
-                    <a href="{{ path('op_gestapp_eventgal_eventgalpublish', {'idevent': event.id}) }}" class="stretched-link"></a>
                 </div>
             </div>
         {% endfor %}

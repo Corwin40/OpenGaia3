@@ -14,6 +14,34 @@
                 .catch(error => {
                     console.error(error);
                 });
+
+            // PARTIE Gestion des teams
+            // ---------------------------------------
+            // Bouton Select
+            const tsPropertyCat = new TomSelect("#structure_Team",{
+                plugins: ['remove_button', 'change_listener'],
+                create: true,
+                onItemAdd:function(){
+                    this.setTextboxValue('');
+                    this.refreshOptions();
+                },
+                render:{
+                    option:function(data,escape){
+                        return '<div class="d-flex"><span>' + escape(data.data) + '</span><span class="ms-auto text-muted">' + escape(data.value) + '</span></div>';
+                    },
+                    item:function(data,escape){
+                        return '<div>' + escape(data.data) + '</div>';
+                    }
+                }
+            });
+            // Ouverture de la modale
+            const modalAddTeam = document.getElementById('modalHouseCat')
+            const Team = new bootstrap.Modal(modalAddTeam, { keyboard: true })
+            const addTeam = document.getElementById('addTeam')
+            addTeam.addEventListener('click', function(event){
+                event.preventDefault()
+                Team.show()
+            })
         }
     </script>
 {% endblock %}
@@ -23,10 +51,10 @@
     {{ include('admin/structure/include/_section_content_header.html.twig') }}
     <section id="op_admin_content_body">
         <div class="row g-2">
-            <div class="col-2">
+            <div class="col-12 col-lg-2 col-xl-2 col-xxl-2">
                 {{ include('admin/structure/include/_section_content_aside.html.twig') }}
             </div>
-            <div class="col-10">
+            <div class="col-12 col-lg-10 col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-header">
                         <h3>Modifier une structure</h3>
@@ -37,4 +65,21 @@
         </div>
     </section>
 </div>
+{% endblock %}
+
+{% block Modal %}
+    <section>
+        {# Modal d'ajout Team #}
+        <div class="modal fade" id="modalAddTeam" tabindex="-1" aria-labelledby="modalAddTeam" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter une Catégorie de type F1, F2... :</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    {{ render(controller('App\\Controller\\Admin\\TeamController::new')) }}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

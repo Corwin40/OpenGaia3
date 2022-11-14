@@ -11,6 +11,8 @@ a:active, a:hover{
 }
 body{
   background-color: #222222;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 h1, h2, h3, h4, h5, h6{
@@ -56,6 +58,26 @@ nav{
   color: $jaf-color-first !important;
   text-transform:uppercase;
 }
+
+#member_content  {
+  button{
+    border: 1px solid #6c757d;
+    background: transparent;
+    color: #6c757d !important;
+  }
+  button.active {
+    border: 1px solid #cdb55f;
+    background: transparent;
+    color: #cdb55f !important;
+  }
+  button:hover {
+    border: 1px solid #cdb55f;
+    background: transparent;
+    color: #cdb55f !important;
+  }
+}
+
+
 
 /***---------- MAIN ----------***/
 
@@ -130,7 +152,7 @@ label {
 .tarif-rounded{
   width:200px;
   height:200px;
-  background-color:#cdb55f;
+  background-color:$jaf-color-first;
   border-radius: 50%;
 }
 
@@ -228,6 +250,17 @@ label {
 section{
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+/***---------- Form ----------***/
+.btn-primary {
+  border: 1px solid $jaf-color-first !important;
+  background: #2F2F2F;
+  color: $jaf-color-first;
+}
+
+.btn-primary:hover{
+  background: $jaf-color-first;
+  color: $jaf-color-second !important;
 }
 
 /***---------- FOOTER ----------***/

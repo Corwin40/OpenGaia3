@@ -6,6 +6,23 @@
 
 {% endblock %}
 
+{% block Javascripts %}
+    {{ parent() }}
+    <script>
+        window.onload = function(){
+            function onClickShowGal(event){
+                event.preventDefault()
+                let idEvent = this.href
+                alert('Ok - ' . idEvent)
+            }
+            // Mise enplace d'un event sur les liens des vignettes
+            document.querySelectorAll('a.showGal').forEach(function (link){
+                link.addEventListener('click', onClickShowGal);
+            })
+        }
+    </script>
+{% endblock %}
+
 {% block title %}{{ parameter.nameSite }}{% endblock %}
 
 {% block content %}

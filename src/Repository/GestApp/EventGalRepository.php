@@ -19,12 +19,12 @@ class EventGalRepository extends ServiceEntityRepository
         parent::__construct($registry, EventGal::class);
     }
 
-    public function EventGalPublish($idevent)
+    public function EventGalPublish($eventName)
     {
         return $this->createQueryBuilder('e')
             ->join('e.event', 'ev')
-            ->andWhere('ev.id = :idevent')
-            ->setParameter('idevent', $idevent)
+            ->andWhere('ev.name= :name')
+            ->setParameter('name', $eventName)
             ->orderBy('e.id', 'ASC')
             ->getQuery()
             ->getResult()

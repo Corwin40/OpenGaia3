@@ -1,0 +1,8 @@
+<div class="row mb-2" id="member_header">
+    <div class="col-12">
+    {% for team in teams %}
+        <button class="btn btn-primary">{{ team.name }}</button>
+    {% else %}
+    {% endfor %}
+    </div>
+</div>

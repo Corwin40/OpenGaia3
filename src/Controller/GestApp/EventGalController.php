@@ -7,6 +7,7 @@ use App\Entity\GestApp\EventGal;
 use App\Form\GestApp\EventGal2Type;
 use App\Form\GestApp\EventGalType;
 use App\Repository\GestApp\EventGalRepository;
+use App\Repository\GestApp\EventRepository;
 use Doctrine\DBAL\Driver\PDO\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -34,18 +35,21 @@ class EventGalController extends AbstractController
     }
 
     /**
-     * @Route("/gest/app/eventgalpublish/{idevent}", name="op_gestapp_eventgal_eventgalpublish", methods={"GET"})
+     * @Route("/gest/app/eventgalpublish/{eventName}", name="op_gestapp_eventgal_eventgalpublish", methods={"GET"})
      */
-    public function EventGalPublish($idevent, PaginatorInterface $paginator, Request $request): Response
+    public function EventGalPublish($eventName, PaginatorInterface $paginator, Request $request, EventRepository $eventRepository): Response
     {
-        $data = $this->getDoctrine()->getRepository(EventGal::class)->EventGalPublish($idevent);
+        $event = $eventRepository->findBy(['name' => $eventName]);
+        $data = $this->getDoctrine()->getRepository(EventGal::class)->EventGalPublish($eventName);
         $eventGal = $paginator->paginate(
             $data,
             $request->query->getInt('page', 1),
             20
         );
+        //dd($data);
         return $this->render('gest_app/event_gal/EventGalPublish.html.twig', [
             'event_gals' => $eventGal,
+            'event' => $event
         ]);
     }
 
@@ -158,14 +162,18 @@ class EventGalController extends AbstractController
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            $eventGal->setName($event->getName().$uuid);
-            $eventGal->setEvent($event);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($eventGal);
-            $entityManager->flush();
+        $img = $form->get('imageFile');
+        // dd($img);
+        if($img){
+            if ($form->isSubmitted() && $form->isValid()) {
+                $eventGal->setName($event->getName().$uuid);
+                $eventGal->setEvent($event);
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($eventGal);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('op_gestapp_event_edit', ['id'=> $idevent]);
+                return $this->redirectToRoute('op_gestapp_event_edit', ['id'=> $idevent]);
+            }
         }
 
         return $this->render('gest_app/event_gal/addbyevent.html.twig', [

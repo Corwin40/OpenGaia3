@@ -3,7 +3,10 @@
 namespace App\Form\Admin;
 
 use App\Entity\Admin\Structure;
+use App\Entity\Admin\Team;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\ChoiceList;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -41,14 +44,6 @@ class StructureType extends AbstractType
                 'delete_label' => 'Supprimer',
                 'download_label' => 'Télecharger',
             ])
-            ->add('jaf', ChoiceType::class, [
-                'choices'  => [
-                    'jaf-lons' => 'JUST à FAIRE - Lons',
-                    'jaf-capbreton' => 'JUST à FAIRE - Capbreton',
-                    'jaf-anglet' => 'JUST à FAIRE - anglet',
-                    'jaf-mdm' => 'JUST à FAIRE - Mont de Marsan',
-                ],
-            ])
             ->add('illustrationFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
@@ -66,6 +61,15 @@ class StructureType extends AbstractType
                 'allow_delete' => true,
                 'delete_label' => 'Supprimer',
                 'download_label' => 'Télecharger',
+            ])
+            ->add('Team',EntityType::class, [
+                'class' => Team::class,
+                'label' => 'Equipement du bien',
+                'multiple' => true,
+                'choice_attr' => ChoiceList::attr($this, function (?Team $team) {
+                    return $team ? ['data-data' => $team->getName()] : [];
+                }),
+                'required' => false
             ])
 
         ;

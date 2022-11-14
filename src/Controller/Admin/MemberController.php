@@ -7,6 +7,7 @@ use App\Entity\Admin\Parameter;
 use App\Form\Admin\Member2Type;
 use App\Form\Admin\MemberType;
 use App\Repository\Admin\MemberRepository;
+use App\Repository\Admin\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -165,10 +166,12 @@ class MemberController extends AbstractController
     /**
      * @Route("/webapp/members", name="op_admin_member_front_members", methods={"GET"})
      */
-    public function Members(MemberRepository $memberRepository)
+    public function Members(MemberRepository $memberRepository, TeamRepository $teamRepository)
     {
+        $teams = $teamRepository->findAll();
         return $this->render('admin/member/members.html.twig', [
             'members' => $memberRepository->listMembersOnFront(),
+            'teams' => $teams
         ]);
     }
 

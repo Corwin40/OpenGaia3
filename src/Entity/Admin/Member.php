@@ -231,6 +231,16 @@ class Member implements UserInterface
      */
     private $parraingesAuthor;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Team::class, mappedBy="Anims")
+     */
+    private $team;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Team::class, mappedBy="members")
+     */
+    private $teams;
+
 
     public function __construct()
     {
@@ -245,6 +255,8 @@ class Member implements UserInterface
         $this->authormessages = new ArrayCollection();
         $this->recipientmessage = new ArrayCollection();
         $this->parraingesAuthor = new ArrayCollection();
+        $this->team = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -846,5 +858,35 @@ class Member implements UserInterface
 
     private function unserialized(array $serialized, array $array)
     {
+    }
+
+    /**
+     * @return Collection|Team[]
+     */
+    public function getTeam(): Collection
+    {
+        return $this->team;
+    }
+
+    public function addTeam(Team $team): self
+    {
+        if (!$this->team->contains($team)) {
+            $this->team[] = $team;
+            $team->setAnims($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): self
+    {
+        if ($this->team->removeElement($team)) {
+            // set the owning side to null (unless already changed)
+            if ($team->getAnims() === $this) {
+                $team->setAnims(null);
+            }
+        }
+
+        return $this;
     }
 }
